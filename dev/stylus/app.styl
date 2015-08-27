@@ -1,0 +1,79 @@
+@import 'nib'
+@import 'nprogress.styl'
+// @import 'dev/css/fontello.css'
+
+global-reset()
+
+vertical-align()
+  position relative
+  top 50%
+  transform translateY(-50%)
+
+@import 'ColorAndType.styl'
+
+img.dummy
+  display none
+
+#world
+  display block
+  position fixed
+  top 0
+  lef 0
+  width 100%
+  height 100%
+  z-index -1
+
+body
+  margin 0 0 100% 0
+  background gray
+  // overflow hidden
+  .inner
+    margin 0 auto
+    // overflow hidden
+    background-color transparent
+    // height auto
+    width 90%
+    // min-height 100%
+    text-align center
+    display block
+
+header
+  min-height 100%
+  height 100%
+  display block
+  h1
+    margin 30% 0 0 0
+    width 100%
+    display block
+    text-align center
+    // vertical-align()
+  h2
+    margin 5% 0 0 0
+    // vertical-align()
+  p
+    // vertical-align()
+    font-size 2rem
+
+section
+  display block
+  text-align left
+  &#about
+    margin 40% auto 0 auto
+    p
+      width 70%
+      margin 0 auto
+      font-size 2rem
+      span
+        display block
+        margin 0 0 2rem 0
+
+
+  &#works
+    display block
+    text-align left
+    margin 40% auto 0 auto
+    a
+      width 70%
+      margin 2rem auto
+      font-size 2rem
+      display block

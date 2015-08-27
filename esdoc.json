@@ -1,0 +1,8 @@
+{
+  "source": "./dev/js",
+  "destination": "./esdoc",
+  "test": {
+    "type": "mocha",
+    "source": "./test"
+  }
+}
