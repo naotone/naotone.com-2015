@@ -1,3 +1,7 @@
+// import Bg from './bg.js';
+// import Util from './util.js';
+// const date = Util.formatDate();
+
 var scene, cam, shadowLight, light, backLight, renderer, time, clock;
 
 var container,
@@ -14,8 +18,10 @@ var container,
     stats,
     particleArray = [],
     flyingParticles = [],
-    colors = ['#EA6A63','#61D0EA', '#EAA760','#EEEEEE','#333333'],
-    colors0x = ['0xEA6A63','0x61D0EA', '0xEAA760','0xEEEEEE','0x333333']
+    // colors = ['#ffffff','#dddddd', '#bbbbbb','#777777','#333333'],
+    colors = ['#ffffff','#EA6A63','#61D0EA', '#EAA760','#EEEEEE','#777777'],
+    // colors0x = ['0xffffff','0xdddddd', '0xbbbbbb','0x777777','0x333333']
+    colors0x = ['0xFFFFFF','0xEA6A63','0x61D0EA', '0xEAA760','0xEEEEEE','0x777777']
     ;
 
 var cube;
@@ -33,40 +39,147 @@ var tex;
 var projects = document.getElementsByClassName("project");
 
 window.addEventListener('resize', onWindowResize, false);
-// document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-// window.addEventListener( 'mouseenter', loadTex, false );
-// test.addEventListener( 'mouseleave', removeTex, false );
-for(var i=0; i<projects.length; i++){
-  projects[i].addEventListener('mouseenter', loadTex, false);
+window.addEventListener('resize', styling, false);
+document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+window.addEventListener('click', changeMode, false);
+
+var mode = 'normal';
+
+function changeMode(){
+  // mode = 'line';
 }
+
+var mouseon;
+
+mouseon = (function() {
+  if (Modernizr.touch) {
+    return "touchstart";
+  } else {
+    return "mouseenter";
+  }
+})();
+
 for(var i=0; i<projects.length; i++){
+  projects[i].addEventListener(mouseon, loadTex, false);
+  projects[i].addEventListener('click', projectsIn, false);
+
   projects[i].addEventListener('mouseleave', removeTex, false);
 }
 
-NProgress.start();
 
+preLoadImages();
 initDocument();
 
 
-var textureManager = new THREE.LoadingManager();
-textureManager.onLoad = function () {
-    console.log('done');
-    NProgress.done();
-};
-
-var textureLoader = new THREE.ImageLoader( textureManager );
-var myTextureArray = [];
-var myTexture = new THREE.Texture();
-myTextureArray.push( myTexture );
-
-for (var i = 0; i < projects.length; i++) {
-  var image = projects[i].dataset.tex;
-  textureLoader.load( [image], function ( image ) {
-      myTexture.image = image;
-  } );
-  console.log(i);
+function styling(){
+  HEIGHT = window.innerHeight;
+  var sections = document.querySelectorAll('section');
+  for (var i = 0; i < sections.length; i++) {
+    sections[i].style.height = HEIGHT*0.7 +'px';
+    // sections[i].style.visibility = 'visible';
+  }
+  document.getElementById('header').style.height = HEIGHT +'px';
+  document.body.style.visibility = 'visible';
 }
 
+
+function projectsIn(id){
+  for(var i=0; i<projects.length; i++){
+    fadeIn(projects[i].nextElementSibling, 'auto', 600, easing.easeInOutQuart, true);
+  }
+  fadeIn(this.nextElementSibling, 'auto', 600, easing.easeInOutQuart, false);
+}
+
+function fadeIn(elem, target, duration, easingFunction, close) {
+    var start = Date.now(),
+    reverse = false;
+    if(target == 'auto'){
+      target = elem.scrollHeight;
+    }
+    if(elem.offsetHeight > 0 && close){
+      reverse = true;
+    }
+
+    // if(from === Y) {
+    //     callback();
+    //     return; /* Prevent scrolling to the Y point if already there */
+    // }
+
+    function min(a,b) {
+    	return a<b?a:b;
+    }
+
+    function scroll(timestamp) {
+
+        var currentTime = Date.now(),
+            time = min(1, ((currentTime - start) / duration)),
+            easedT = easingFunction(time);
+          if(reverse == true){
+              console.log('reverse');
+            elem.style.height = target - (easedT * (target)) + 'px';
+          }else if(!close){
+            console.log('normal');
+            elem.style.height = (easedT * (target)) + 'px';
+          }
+
+
+        if(time < 1) requestAnimationFrame(scroll);
+        else
+            // if(callback) callback();
+    }
+
+    requestAnimationFrame(scroll)
+}
+
+
+
+
+function runScroll() {
+  scrollTo(document.getElementById('about').offsetTop - 100, 600, easing.easeInOutQuart);
+}
+
+var scrollme;
+scrollme = document.getElementById('header');
+scrollme.addEventListener("click",runScroll,false);
+
+//
+// function scrollTo(element, to, duration) {
+//   if (duration < 0) return;
+//   var difference = to - element.scrollTop;
+//   var perTick = difference / duration * 10;
+//
+//   setTimeout(function() {
+//     element.scrollTop = element.scrollTop + perTick;
+//     if (element.scrollTop == to) return;
+//     scrollTo(element, to, duration - 10);
+//   }, 10);
+// }
+
+//////////////////////////////////////
+// THREE
+//////////////////////////////////////
+
+function preLoadImages(){
+  NProgress.start();
+
+  var textureManager = new THREE.LoadingManager();
+  textureManager.onLoad = function () {
+      // console.log('done');
+      NProgress.done();
+  };
+
+  var textureLoader = new THREE.ImageLoader( textureManager );
+  var myTextureArray = [];
+  var myTexture = new THREE.Texture();
+  myTextureArray.push( myTexture );
+
+  for (var i = 0; i < projects.length; i++) {
+    var image = projects[i].dataset.tex;
+    textureLoader.load( [image], function ( image ) {
+        myTexture.image = image;
+    } );
+  }
+}
 
 function initDocument(){
   HEIGHT = window.innerHeight;
@@ -76,11 +189,11 @@ function initDocument(){
   container = document.getElementById('world');
 
   initTHREE();
+  styling();
 }
 
 function initTHREE(){
   clock = new THREE.Clock();
-  console.log(time);
   scene = new THREE.Scene();
   scene.overrideMaterial
   scene.fog = new THREE.FogExp2( 0xf0f0f0, 0.00075 );
@@ -126,7 +239,7 @@ function createCam(){
 }
 
 function createLight(){
-  shadowLight = new THREE.DirectionalLight(0xffffff, 2);
+  shadowLight = new THREE.DirectionalLight(0xffffff, 1.5);
   shadowLight.position.set(20, 0 ,10);
   shadowLight.castShadow = true;
   shadowLight.shadowDarkness = 0.01;
@@ -188,7 +301,11 @@ function createParticle(p){
     p.mesh.position.y = (-HEIGHT + Math.random()*HEIGHT*2 );
     var s = .05 + Math.random();
   }
-  p.mesh.scale.set(s,s,s);
+  if(mode == 'line'){
+    p.mesh.scale.set(s,s,100);
+  }else{
+    p.mesh.scale.set(s,s,s);
+  }
   // p.mesh.scale.set(10,10,10);
 
   scene.add(p.mesh);
@@ -202,12 +319,22 @@ function flyParticle(p){
   p.material.needsUpdate = true;
   var s = p.mesh.scale.x;
   var ss = Math.max(p.mesh.scale.x*6, 4)
+  if(mode == 'normal'){
   TweenMax.to(p.mesh.rotation, ss, {
     x: s * 4 *Math.random(),
     y: s * 4 *Math.random(),
     z: s * 4 *Math.random(),
     ease : Quart.out
   });
+}else if(mode =='line'){
+  TweenMax.to(p.mesh.rotation, 0, {
+    // x: s * 4 *Math.random(),
+    // y: s * 4 *Math.random(),
+    y: Math.PI/2,
+    ease : Quart.out
+  });
+
+}
 
   TweenMax.to(p.mesh.position, ss, {
     x: p.mesh.position.x *2,
@@ -226,8 +353,13 @@ function flyParticle(p){
 }
 
 function loadTex(id){
+  if(Modernizr.touch && cube){
+    scene.remove(cube);
+  }
   // console.log('on');
-  id = this.id;
+  // if(!id){
+  //   id = this.id;
+  // }
   // tex = id;
   tex = this.dataset.tex;
   loadingTex = true;
@@ -272,11 +404,17 @@ function loadTex(id){
   cube = new THREE.Mesh(geometry, material);
   var s = 0.01;
   cube.scale.set(s,s,s);
-  cube.position.x = cube.position. y = 0;
-  cube.position. z = 2000;
+  cube.position.x = 0;
+  cube.position.y = 0;
+  cube.position.z = 2000;
 
   scene.add(cube);
   cubes.push(cube);
+
+  TweenMax.to(cube.position, 1, {
+    x: 200,
+    ease: Cubic.In
+  });
 
   TweenMax.to(cube.scale, 1, {
     x: 5,
@@ -293,15 +431,13 @@ function loadTex(id){
     ease: Linear.easeNone,
     repeat: -1
   });
-
-
 }
 
 function removeTex(){
   TweenMax.to(cube.position, 0.5, {
     // x: 0,
     // y: 0,
-    z: 3000,
+    z: 3500,
     ease: Cubic.In,
     // onComplete: function(){
     //   scene.remove(cube);
@@ -365,8 +501,8 @@ function render(){
   time = clock.getElapsedTime();
   // console.log(cubes.length);
   // console.log(time);
-  cam.position.x += ( mouseX - cam.position.x ) * .05;
-  cam.position.y += ( - mouseY - cam.position.y ) * .05;
+  cam.position.x += ( mouseX - cam.position.x ) * .025;
+  cam.position.y += ( - mouseY - cam.position.y ) * .025;
   cam.lookAt( scene.position );
 
   if(cube){
@@ -393,6 +529,7 @@ function onWindowResize(){
   cam.aspect = window.innerWidth / window.innerHeight;
   cam.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
+  styling();
 }
 
 function onDocumentMouseMove(event) {
@@ -420,6 +557,71 @@ function hexToRgb(hex) {
   } : null;
 }
 
+function scrollTo(Y, duration, easingFunction, callback) {
+
+    var start = Date.now(),
+    	elem = document.documentElement.scrollTop?document.documentElement:document.body,
+    	from = elem.scrollTop;
+
+    if(from === Y) {
+        callback();
+        return; /* Prevent scrolling to the Y point if already there */
+    }
+
+    function min(a,b) {
+    	return a<b?a:b;
+    }
+
+    function scroll(timestamp) {
+
+        var currentTime = Date.now(),
+            time = min(1, ((currentTime - start) / duration)),
+            easedT = easingFunction(time);
+
+        elem.scrollTop = (easedT * (Y - from)) + from;
+
+        if(time < 1) requestAnimationFrame(scroll);
+        else
+            if(callback) callback();
+    }
+
+    requestAnimationFrame(scroll)
+}
+
+/* bits and bytes of the scrollTo function inspired by the works of Benjamin DeCock */
+
+/*
+ * Easing Functions - inspired from http://gizma.com/easing/
+ * only considering the t value for the range [0, 1] => [0, 1]
+ */
+var easing = {
+  // no easing, no acceleration
+  linear: function (t) { return t },
+  // accelerating from zero velocity
+  easeInQuad: function (t) { return t*t },
+  // decelerating to zero velocity
+  easeOutQuad: function (t) { return t*(2-t) },
+  // acceleration until halfway, then deceleration
+  easeInOutQuad: function (t) { return t<.5 ? 2*t*t : -1+(4-2*t)*t },
+  // accelerating from zero velocity
+  easeInCubic: function (t) { return t*t*t },
+  // decelerating to zero velocity
+  easeOutCubic: function (t) { return (--t)*t*t+1 },
+  // acceleration until halfway, then deceleration
+  easeInOutCubic: function (t) { return t<.5 ? 4*t*t*t : (t-1)*(2*t-2)*(2*t-2)+1 },
+  // accelerating from zero velocity
+  easeInQuart: function (t) { return t*t*t*t },
+  // decelerating to zero velocity
+  easeOutQuart: function (t) { return 1-(--t)*t*t*t },
+  // acceleration until halfway, then deceleration
+  easeInOutQuart: function (t) { return t<.5 ? 8*t*t*t*t : 1-8*(--t)*t*t*t },
+  // accelerating from zero velocity
+  easeInQuint: function (t) { return t*t*t*t*t },
+  // decelerating to zero velocity
+  easeOutQuint: function (t) { return 1+(--t)*t*t*t*t },
+  // acceleration until halfway, then deceleration
+  easeInOutQuint: function (t) { return t<.5 ? 16*t*t*t*t*t : 1+16*(--t)*t*t*t*t }
+}
 
 
 // this.geometry.gynamic= true;

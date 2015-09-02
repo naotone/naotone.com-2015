@@ -3,24 +3,71 @@ gray = #F0F0F0
 red = #FF6363
 blue = #647FFF
 orange = #FFAF63
-gold = #C6A76B
 
-fontSerif  = 'Verlag'
+fontSerif  = 'Gotham', 'proxima-nova'
+fontFutura  = 'futura', 'futura-pt'
+// 'Verlag'
 
 html
   font-family fontSerif
-  color gray
+
+header
+  h1
+    font-family fontFutura
+
 body
   font-size 62.5%
   letter-spacing 0.1rem
-  p
+  span.bg
+    background none
+    // line-height 0.7rem
+    display inline-block
+    // border 2px solid #0000ff
+    border-bottom 1px solid black
+    &:hover
+      color white
+      border-bottom 1px solid transparent
+      // border 2px solid transparent
+      background none
+      background #0000ff
+
+  p,
+  li
     line-height 140%
   a
-    text-decoration none
+    color black
+    cursor pointer
+    text-decoration underline
+    &:hover
+      // color white
+      text-decoration none
+
+header
   h1
     font-size 3.5rem
     letter-spacing 0.15rem
   h2
     font-size 2.0rem
-  p
-    font-size 1.5rem
+
+footer
+  font-size 0.8rem
+
+nav,
+#socialLinks
+  font-size 1rem
+
+section
+  p,
+  a
+    font-size 1.6rem
+  li
+    font-size 1.3rem
+  h1
+    font-weight bold
+    font-size 2rem
+  h2
+    font-weight bold
+    font-size 1.8rem
+  ul.credit
+    li
+      font-size 1.2rem

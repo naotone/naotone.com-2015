@@ -2,47 +2,114 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Document</title>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+
+  <title>Naoto Yoshimoto</title>
   <link rel="stylesheet" href="style.css">
+
+  <!-- <script src="https://use.typekit.net/svn8kad.js"></script> -->
+  <!-- <script>try{Typekit.load({ async: true });}catch(e){}</script> -->
 </head>
 <body class="nprogress-busy">
+  <nav id="mainNav">
+    <ul>
+      <li><a href="#">Top</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#works">Works</a></li>
+    </ul>
+  </nav>
+  <div id="socialLinks">
+    <ul>
+      <li><a href="https://facebook.com/naotone/">Facebook</a></li>
+      <li><a href="https://instagram.com/naotone/">Instagram</a></li>
+      <li><a href="mailto:me@naotone.com">Email</a></li>
+    </ul>
+  </div>
+
   <div class="inner">
-    <header>
+
+    <header id="header">
       <h1>Naoto Yoshimoto</h1>
       <h2>Programmer, Designer</h2>
       <p>@naotone</p>
+
+      <div class="scrolldown"></div>
     </header>
 
     <section id="about">
+      <h1>ABOUT</h1>
       <p>
         <span>
         Naoto Yoshimoto is a programmer and designer moved NYC from JAPAN. <br>
-        I was a student at the School For Poetic Computation.<br>
+        I was a student at the <a href="http://sfpc.io/"><span class="bg">School For Poetic Computation</span></a>.<br>
         </span>
         <span>
-        Now I'm looking for a new job in NYC.<br>
+        Now I'm looking for a new job in NYC and I also work as a freelance programmer and designer.
         </span>
         <span>
-        I'm on Facebook, Instagram and you can email me.<br>
+        I'm on <a href="https://facebook.com/naotone/"><span class="bg">Facebook</span></a>, <a href="https://instagram.com/naotone/"><span class="bg">Instagram</span></a> and you can <a href="mailto:me@naotone.com"><span class="bg">Email</span></a> me.<br>
       </span>
       </p>
     </section>
+    <section id="works">
+      <h1>WORKS</h1>
+      <ul>
+        <li>
+          <a id="nipponista" class="project" data-tex="images/nipponista.jpg"><span class="bg">TEST</span></a>
+          <ul class="credit">
+            <li>Year: 2014</li>
+            <li>Direction: #heymeoto</li>
+            <li>Art Direction: Rikako Nagashima</li>
+            <li>Design: Shu Fukushima</li>
+            <li>Coding: Motohiro Sunouchi, Hideki Ikeda, Naoto Yoshimoto</li>
+            <li>Production Assistant: Kohe Kawaminami</li>
+            <li>Information Architect: #heymeoto</li>
+          </ul>
+        </li>
+        <li>
+          <a id="test1" class="project" data-tex="images/test1.jpg"><span class="bg">Nipponista ISETAN at NYC</span></a>
+            <ul class="credit">
+              <li>Year: 2014</li>
+              <li>Agency: augment5</li>
+              <li>Design: Naoto Yoshimoto</li>
+              <li>Coding: Naoto Yoshimoto</li>
+            </ul>
+        </li>
+        <li>
+          <a id="test2" class="project" data-tex="images/test2.jpg"><span class="bg">Sappro International Art Festival 2014</span></a>
+          <ul class="credit">
+            <li>Year: 2014</li>
+            <li>Direction: #heymeoto</li>
+            <li>Art Direction: Rikako Nagashima</li>
+            <li>Design: Shu Fukushima</li>
+            <li>Coding: Motohiro Sunouchi, Hideki Ikeda, Naoto Yoshimoto</li>
+            <li>Production Assistant: Kohe Kawaminami</li>
+            <li>Information Architect: #heymeoto</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
   </div>
-  <section id="works">
-    <a id="nipponista" class="project" data-tex="images/nipponista.jpg">TESTTTTTTTTTTTTTTTTT</a>
-    <a id="test1" class="project" data-tex="images/test1.jpg">Nipponista ISETAN at NYC</a>
-    <a id="test2" class="project" data-tex="images/test2.jpg">Sappro International Art Festival 2014</a>
-  </section>
+
+  <footer id="footer">
+    <p>&copy; 2015 Naoto Yoshimoto</p>
+  </footer>
   <div id="world"></div>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/three.js/r70/three.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/three.js/r70/three.min.js"></script> -->
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script> -->
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/classie/1.0.1/classie.min.js"></script> -->
+
+<script type="text/javascript" src="dev/js/modernizr.custom.80335.js"></script>
+<script type="text/javascript" src="dev/js/nprogress.js"></script>
+
 <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/stats.js/r11/Stats.js"></script> -->
 <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.16.1/TweenMax.min.js"></script> -->
 <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/tweenjs/0.6.0/tweenjs.min.js"></script> -->
-<!-- <script src="scripts/three.min.js"></script> -->
+<script src="scripts/three70.min.js"></script>
 <script src="scripts/Stats.min.js"></script>
 <script src="scripts/TweenMax.min.js"></script>
+<script src="scripts/transition.min.js"></script>
 <script src="scripts/app.min.js"></script>
 
 </body>
