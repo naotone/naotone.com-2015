@@ -49,6 +49,40 @@ img.dummy
   height 100%
   z-index -1
 
+.Animated
+  animation-fill-mode both
+  animation-duration .5s
+  transition-timing-function ease-out
+.Animated--reverse
+  animation-direction reverse
+
+.Animate--fast
+  animation-duration .3s
+
+.Animate--noDelay
+  animation-delay 0s !important
+
+.Animate--slideOut
+  animation-name Animation-slideOut
+@keyframes Animation-slideOut
+  0%
+    opacity 0
+    transform  perspective(500px) translateZ(2000px)
+  100%
+    opacity 1
+    transform  perspective(500px) translateZ(0px)
+
+.Animate--slideIn
+  animation-name Animation-slideIn
+@keyframes Animation-slideIn
+  0%
+    opacity 0
+    transform  perspective(500px) translateZ(-2000px)
+  100%
+    opacity 1
+    transform  perspective(500px) translateZ(0px)
+
+
 body
   visibility hidden
   background gray
@@ -93,7 +127,9 @@ header
   min-height 100%
   height 100%
   display block
-  position relative
+  position absolute
+  top 0
+  left 5%
   h1
     // padding 30% 0 0 0
     width 100%
@@ -122,18 +158,19 @@ header
 footer
   margin 0 0 2% 0
   text-align center
+  position relative
+  bottom 0
+  left 5%
 
 section
-  min-height 700px
+  min-height 100%
   display block
-  text-align left
-  // width 80%
-  // max-width 780px
-  text-align left
-  margin auto
+  position absolute
+  top 0
+  left 5%
   h1
     display inline-block
-    margin 0 0 2rem 0
+    margin 50% 0 2rem 0
   &#about
     p
       margin 0 auto
@@ -145,8 +182,6 @@ section
 
   &#works
     // text-align center
-    overflow hidden
-    display blcok
     a
       display inline-block
       margin 0 auto 2rem auto
