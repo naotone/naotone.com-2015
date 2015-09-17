@@ -6,39 +6,72 @@ var inner = document.querySelector('.inner');
 
 var pjaxTime = 1000;
 var bPjax = false;
-var projects;
+var projects = 0;
+var particlesOn = true;
+var loading;
+var bLoading = true;
+
+var mouseon;
+mouseon = (function() {
+  if (Modernizr.touch) {
+    return "touchstart";
+  } else {
+    return "mouseenter";
+  }
+})();
 
 function pjaxCounter(){
+  console.log(bPjax);
+  console.log(pjaxTime);
   pjaxTime++;
+
   setTimeout(pjaxCounter, 10);
-  if(pjaxTime >100 && bPjax){
-    document.getElementById('wrap').className = ' ';
-    bPjax = false;
+  if(pjaxTime > 150 && !bPjax){
+    // document.getElementById('wrap').className = ' ';
+    bPjax = true;
   }
 }
 
-// pjaxCounter();
+pjaxCounter();
 
 function pjaxSend(){
-  // pjaxTime = 0;
-  // fadeInOut(document.body, 0, 400, easing.easeInOutQuart, true);
-  // document.getElementById('wrap').className = 'pjax';
+}
+
+
+
+
+
+function pjaxComplete(){
+    bPjax = false;
+      pjaxTime = 0;
+      projects = document.getElementsByClassName("project");
+      if(projects !== null)
+      for(var i=0; i<projects.length; i++){
+        // console.log(projects[i]);
+        projects[i].addEventListener(mouseon, loadTex, false);
+        projects[i].addEventListener('click', projectsIn, false);
+
+        projects[i].addEventListener('mouseleave', removeTex, false);
+      }
+      preLoadImages();
+
+}
+
+
+var jsPjax;
+jsPjax = document.querySelectorAll('nav a, h1 a');
+for(var i=0; i<jsPjax.length; i++){
+  jsPjax[i].addEventListener('click', pjaxStart, false);
+}
+
+function pjaxStart(){
+  bLoading = true;
+  particlesOn = false;
   for (var i=0; i<flyingParticles.length; i++){
     var p = flyingParticles[i];
     var s = p.mesh.scale.x;
     var ss = Math.max(p.mesh.scale.x*6, 4)
 
-    // p.material.needsUpdate = true;
-    // p.material.color.setHex(0xffffff);
-    // p.material.map = THREE.ImageUtils.loadTexture( 'images/'+id+'.jpg');
-
-    // TweenMax.to(p.mesh, 0.6, {
-    //   x: 2,
-    //   y: 2,
-    //   z: 2,
-    // 	ease: Cubic.In,
-    //   delay: 0.01*i
-    // });
     TweenMax.to(p.mesh.position, 0.6, {
       x: p.mesh.position.x * 3,
       y: p.mesh.position.y * 3,
@@ -46,43 +79,13 @@ function pjaxSend(){
     	ease: Cubic.In
     });
   }
-}
-
-
-if( window.location.href.indexOf("works") > -1){
-  if(hasClass(document.querySelector('section'), 'works')){
-    // alert('123');
-    projects = document.getElementsByClassName("project");
-    for(var i=0; i<projects.length; i++){
-      projects[i].addEventListener(mouseon, loadTex, false);
-      projects[i].addEventListener('click', projectsIn, false);
-
-      projects[i].addEventListener('mouseleave', removeTex, false);
-    }
-  }
 
 }
-
-
-function pjaxSuccess(){
-    // bPjax = true;
-    if(hasClass(document.querySelector('section'), 'works')){
-      console.log('works');
-      projects = document.getElementsByClassName("project");
-      for(var i=0; i<projects.length; i++){
-        projects[i].addEventListener(mouseon, loadTex, false);
-        projects[i].addEventListener('click', projectsIn, false);
-
-        projects[i].addEventListener('mouseleave', removeTex, false);
-      }
-    }
-}
-
 
 
 new Pjax({
   elements: 'a[href]', // default is 'a[href], form[action]'
-  selectors: ['title', '.js-Pjax', 'nav'],
+  selectors: ['title', '.js-Pjax'],
   switches: {
     '.js-Pjax': Pjax.switches.sideBySide
   },
@@ -99,15 +102,24 @@ new Pjax({
         forward: "Animate--slideOut"
       },
       callbacks: {
-        // to make a nice transition with 2 pages as the same time
-        // we are playing with absolute positioning for element we are removing
-        // & we need live metrics to have something great
-        // see associated CSS below
+
         // removeElement: function(el) {
         //   el.style.marginLeft = '-' + (window.innerWidth/2) + 'px'
         // }
         // removeElement: function(el) {
-        //   el.style.opacity = 0;
+          // document.getElementById('spinnerWrap').className  = 'off';
+        // }
+        //   // if(hasClass(document.querySelector('section'), 'works')){
+        //     // console.log('!!!');
+        //
+        //     projects = document.getElementsByClassName("project");
+        //     for(var i=0; i<projects.length; i++){
+        //       projects[i].addEventListener(mouseon, loadTex, false);
+        //       projects[i].addEventListener('click', projectsIn, false);
+        //
+        //       projects[i].addEventListener('mouseleave', removeTex, false);
+        //     }
+        //   // }
         // }
       }
     }
@@ -116,7 +128,17 @@ new Pjax({
 
 
 document.addEventListener("pjax:send", pjaxSend)
-document.addEventListener("pjax:complete", pjaxSuccess)
+document.addEventListener("pjax:complete", pjaxComplete)
+
+if( window.location.href.indexOf("works") > -1){
+    projects = document.getElementsByClassName("project");
+    for(var i=0; i<projects.length; i++){
+      projects[i].addEventListener(mouseon, loadTex, false);
+      projects[i].addEventListener('click', projectsIn, false);
+
+      projects[i].addEventListener('mouseleave', removeTex, false);
+    }
+}
 
 /////////////////////////////////////
 // THREE
@@ -157,15 +179,6 @@ var loadingTex = false;
 var tex;
 
 
-var mouseon;
-mouseon = (function() {
-  if (Modernizr.touch) {
-    return "touchstart";
-  } else {
-    return "mouseenter";
-  }
-})();
-
 
 window.addEventListener('resize', onWindowResize, false);
 window.addEventListener('resize', styling, false);
@@ -179,7 +192,7 @@ function changeMode(){
 
 
 
-// preLoadImages();
+preLoadImages();
 initDocument();
 
 
@@ -214,11 +227,6 @@ function scrollInOut(elem, target, duration, easingFunction, close, callback) {
     if(elem.offsetHeight > 0 && close){
       reverse = true;
     }
-
-    // if(from === Y) {
-    //     callback();
-    //     return; /* Prevent scrolling to the Y point if already there */
-    // }
 
     function min(a,b) {
     	return a<b?a:b;
@@ -269,54 +277,45 @@ function fadeInOut(elem, target, duration, easingFunction, inOut, callback) {
 }
 
 
-
-
-// function runScroll() {
-//   scrollTo(document.getElementById('about').offsetTop - 100, 600, easing.easeInOutQuart);
-// }
-//
-// var scrollme;
-// scrollme = document.getElementById('header');
-// scrollme.addEventListener("click",runScroll,false);
-
-//
-// function scrollTo(element, to, duration) {
-//   if (duration < 0) return;
-//   var difference = to - element.scrollTop;
-//   var perTick = difference / duration * 10;
-//
-//   setTimeout(function() {
-//     element.scrollTop = element.scrollTop + perTick;
-//     if (element.scrollTop == to) return;
-//     scrollTo(element, to, duration - 10);
-//   }, 10);
-// }
-
 //////////////////////////////////////
 // THREE
 //////////////////////////////////////
 
 function preLoadImages(){
-  NProgress.start();
+      // NProgress.start();
+      // document.getElementById('spinnerWrap').className  = 'on';
+      projects = document.getElementsByClassName('project');
 
-  var textureManager = new THREE.LoadingManager();
-  textureManager.onLoad = function () {
-      // console.log('done');
-      NProgress.done();
-  };
+      if(projects.length > 0){
+      var textureManager = new THREE.LoadingManager();
+      textureManager.onLoad = function () {
+          // console.log('done');
+          // NProgress.done();
+          particlesOn = true;
+          bLoading = false;
 
-  var textureLoader = new THREE.ImageLoader( textureManager );
-  var myTextureArray = [];
-  var myTexture = new THREE.Texture();
-  myTextureArray.push( myTexture );
+          // document.getElementById('spinnerWrap').className  = 'off';
+      };
+        var textureLoader = new THREE.ImageLoader( textureManager );
+        var myTextureArray = [];
+        var myTexture = new THREE.Texture();
+        myTextureArray.push( myTexture );
 
-  for (var i = 0; i < projects.length; i++) {
-    var image = projects[i].dataset.tex;
-    textureLoader.load( [image], function ( image ) {
-        myTexture.image = image;
-    } );
-  }
+        for (var i = 0; i < projects.length; i++) {
+          var image = projects[i].dataset.tex;
+          textureLoader.load( [image], function ( image ) {
+              myTexture.image = image;
+          } );
+        }
+      }
+      else{
+        particlesOn = true;
+        if(bLoading)
+          bLoading = false;
+        // document.getElementById('spinnerWrap').className  = 'off';
+      }
 }
+
 
 function initDocument(){
   HEIGHT = window.innerHeight;
@@ -346,6 +345,7 @@ function initTHREE(){
   createStats();
   createCam();
   createLight();
+  createLoading();
   animate();
 }
 
@@ -372,6 +372,58 @@ function createCam(){
   cam.position.x = cam.position.y = 0;
   cam.position.z = camZ;
   cam.lookAt({x:0, y:0, z:0 });
+
+}
+
+function createLoading(){
+  var textureManager = new THREE.LoadingManager();
+  textureManager.onLoad = function () {
+      // console.log('done');
+      // NProgress.done();
+      scene.add(loading);
+      // document.getElementById('spinnerWrap').className  = 'off';
+  };
+    var textureLoader = new THREE.ImageLoader( textureManager );
+    var myTexture = new THREE.Texture();
+    var image = 'images/loading.jpg';
+    textureLoader.load( [image], function ( image ) {
+        myTexture.image = image;
+    } );
+
+
+
+  tex = 'images/loading.jpg';
+  var geometry = new THREE.BoxGeometry( 100, 100, 100 );
+  var material = new THREE.MeshLambertMaterial({
+    color: '#ffffff',
+    shading: THREE.FlatShading,
+    // transparent: false,
+    // overdraw: false,
+    map: THREE.ImageUtils.loadTexture(tex)
+  });
+  var s = 5;
+  geometry.__dirtyVertices = true;
+  geometry.dynamic = true;
+
+  loading = new THREE.Mesh(geometry, material);
+  var s;
+  s = 3;
+  loading.scale.set(s,s,0);
+  loading.position.x = 0;
+  loading.position.y = 0;
+  loading.position.z = 2000;
+
+  // scene.add(loading);
+  // loadings.push(loading);
+
+
+  TweenMax.to(loading.rotation, 5, {
+    x: Math.PI*2,
+    y: Math.PI*2,
+    z: - Math.PI*2,
+    ease: Linear.easeNone,
+    repeat: -1
+  });
 
 }
 
@@ -490,6 +542,7 @@ function flyParticle(p){
 }
 
 function loadTex(id){
+  console.log('loadtex');
   if(Modernizr.touch && cube){
     scene.remove(cube);
   }
@@ -568,6 +621,8 @@ function loadTex(id){
     ease: Linear.easeNone,
     repeat: -1
   });
+
+
 }
 
 function removeTex(){
@@ -619,7 +674,7 @@ function createParticles(){
 }
 
 function updateParticlesLoad(){
-  if(counter % frequency == 0){
+  if(counter % frequency == 0 && particlesOn){
     createParticles();
   }
   counter++;
@@ -635,15 +690,28 @@ function animate(){
 
 
 function render(){
+  // console.log(bLoading);
   time = clock.getElapsedTime();
-  // console.log(cubes.length);
-  // console.log(time);
+  if(!bLoading && bPjax){
+      TweenMax.to(loading.scale, 0.2, {
+      x: 0.001,
+      // y: 0.001,
+      z: 0.001,
+      ease: Cubic.In
+    });
+  }else{
+      TweenMax.to(loading.scale, 0.4, {
+      x: 3,
+      y: 3,
+      // z: 3,
+      ease: Cubic.In
+    });
+  }
   cam.position.x += ( mouseX - cam.position.x ) * .025;
   cam.position.y += ( - mouseY - cam.position.y ) * .025;
   cam.lookAt( scene.position );
 
   if(cube){
-    // console.log(cube);
     if(cube.position.z >= 3000){
       for (var i = 0; i < cubes.length; i++) {
         scene.remove(cubes[i]);
@@ -761,8 +829,19 @@ var easing = {
 }
 
 
-function hasClass( elem, klass ) {
-     return (" " + elem.className + " " ).indexOf( " "+klass+" " ) > -1;
+function hasClass( el, klass ){
+  return (" " + el.className + " " ).indexOf( " "+klass+" " ) > -1;
+}
+
+function addClass(el, klass){
+  el.className += ' '+klass;
+}
+
+function removeClass(el, klass){
+  var elClass = ' '+el.className+' ';
+  while(elClass.indexOf(' '+klass+' ') != -1)
+    elClass = elClass.replace(' '+klass+' ', '');
+  el.className = elClass;
 }
 
 // this.geometry.gynamic= true;
