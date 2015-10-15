@@ -1,5 +1,5 @@
 @import 'nib'
-@import 'nprogress.styl'
+// @import 'nprogress.styl'
 // @import 'dev/css/fontello.css'
 
 global-reset()
@@ -141,7 +141,7 @@ body
     // overflow hidden
     background-color transparent
     // height auto
-    width 80%
+    // width 80%
     // max-width 780px
     // min-height 100%
     // text-align center
@@ -202,34 +202,33 @@ header
     vertical-align(-150%)
     font-size 2rem
     margin 5rem 0 0 0
-  .scrolldown
-    transform rotate(45deg)
-    border-right 1px solid black
-    border-bottom 1px solid black
-    width 2rem
-    height 2rem
-    display block
-    position absolute
-    bottom 5%
-    left 2%
+  // .scrolldown
+  //   transform rotate(45deg)
+  //   border-right 1px solid black
+  //   border-bottom 1px solid black
+  //   width 2rem
+  //   height 2rem
+  //   display block
+  //   position absolute
+  //   bottom 5%
+  //   left 2%
 
 
 footer
   margin 0 0 2% 0
-  text-align center
-  position relative
+  position fixed
   bottom 0
-  left 5%
+  left 2%
 
 section
-  min-height 100%
+  height auto
   display block
   position absolute
-  top 0
-  left 5%
+  left 2%
+  vertical-align(50%)
   h1
     display inline-block
-    margin 50% 0 2rem 0
+    margin 0 0 2% 0 
   &#about
     p
       margin 0 auto

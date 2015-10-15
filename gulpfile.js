@@ -1,4 +1,4 @@
-var files = ['*.html', '*.php', 'scripts/app.min.js', 'style.css'];
+var files = ['**/*.html', '**/*.php', '**/scripts/app.min.js', '**/style.css'];
 
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
@@ -6,16 +6,28 @@ var browser = require( 'browser-sync' ).create();
 
 var config = {
   isWatchify: false,
-  isRelease: false
+  isRelease: false,
+  dest: './dist',
+  src: './src'
 }
 
+gulp.task('jade', function () {
+  return gulp.src(['dev/jade/**/*.jade','!dev/jade/**/_*.jade']).pipe($.plumber({
+    errorHandler: $.notify.onError('<%= error.message %>')
+  }))
+  .pipe($.jade({
+    pretty: true
+  }))
+  .pipe($.if(config.isRelease, gulp.dest(config.dest), gulp.dest(config.src)))
+  .pipe($.notify('gulp: jade finished.'));
+});
 
 gulp.task( 'javascript', $.watchify( function( watchify ) {
   var buffer = require('vinyl-buffer');
   var formatter = require('pretty-hrtime');
   var time = process.hrtime();
 
-  return gulp.src('dev/js/app.js').pipe($.plumber({
+  return gulp.src('dev/js/main.js').pipe($.plumber({
     errorHandler: $.notify.onError('<%= error.message %>')
   }))
   .pipe( watchify({
@@ -37,7 +49,7 @@ gulp.task( 'javascript', $.watchify( function( watchify ) {
   })))
   .pipe($.rename('app.min.js'))
   .pipe($.if(!config.isRelease, $.sourcemaps.write('./')))
-  .pipe($.if(config.isRelease, gulp.dest('./release/scripts'), gulp.dest('scripts')))
+  .pipe($.if(config.isRelease, gulp.dest(config.dest + '/scripts'), gulp.dest(config.src + '/scripts')))
   .on( 'end', function() {
     var taskTime = formatter( process.hrtime( time ) );
     $.util.log( 'Bundled', $.util.colors.green( 'bundle.js' ), 'in', $.util.colors.magenta( taskTime ) );
@@ -63,7 +75,7 @@ gulp.task('stylus', function() {
   .pipe($.rename('style.css'))
   .pipe($.if(config.isRelease, $.minifyCss()))
   .pipe($.if(!config.isRelease, $.sourcemaps.write('.')))
-  .pipe($.if(config.isRelease, gulp.dest('./release'), gulp.dest('./')))
+  .pipe($.if(config.isRelease, gulp.dest(config.dest), gulp.dest(config.src)))
   .pipe($.notify("gulp: stylus finished."));
 });
 
@@ -74,20 +86,52 @@ gulp.task( 'watch:js', function( done ) {
 
 gulp.task( 'server', function() {
   browser.init( {
+    browser: 'Google Chrome Canary',
     server: {
-      baseDir: './'
+      baseDir: config.src
     }
   });
 });
-// gulp.task( 'watch', [ 'watch:js', 'js', 'css', 'server' ], function () {
-gulp.task( 'watch', [ 'watch:js', 'javascript', 'stylus', 'server' ], function () {
-  gulp.watch( ['dev/stylus/*.styl'], ['stylus']);
-  gulp.watch( ['dev/js/app.js'] ,['javascript']);
-  gulp.watch(files).on('change', browser.reload);
 
+gulp.task( 'clean', function( done ) {
+  var del = require( 'del' );
+  del( config.src + 'scripts/lib', done );
+  // .pipe($.notify("gulp: clean finished."));
 } );
 
-gulp.task( 'default', [ 'watch' ] );
+gulp.task( 'copyJs', function() {
+  var src = [
+    './dev/js/lib/**/*.js'
+  ];
+  return gulp.src( src, { base: './dev/js'} )
+    .pipe( gulp.dest( config.src + '/scripts' ))
+    .pipe($.notify("gulp: copy Js finished."));
+});
+
+gulp.task( 'copyFont', function() {
+  var src = [
+    './dev/fonts/**/*.js'
+  ];
+  return gulp.src( src, { base: './dev/fonts'} )
+    .pipe( gulp.dest( config.src + '/fonts' ))
+    .pipe($.notify("gulp: copy fonts finished."));
+});
+
+// gulp.task( 'watch', [ 'watch:js', 'js', 'css', 'server' ], function () {
+gulp.task( 'watch', [ 'jade', 'watch:js', 'javascript', 'stylus', 'server' ], function () {
+  gulp.watch( ['dev/jade/**/*.jade'], ['jade']);
+  gulp.watch( ['dev/stylus/*.styl'], ['stylus']);
+  gulp.watch( ['dev/js/main.js'] ,['javascript']);
+  gulp.watch(files).on('change', browser.reload);
+} );
+
+gulp.task( 'default', function( done ) {
+  var runSequence = require( 'run-sequence' );
+  return runSequence(
+    ['clean', 'copyJs', 'copyFont','watch'],
+    done
+  );
+} );
 
 
 //release/////////////////////////////////////
@@ -95,7 +139,7 @@ gulp.task( 'default', [ 'watch' ] );
 
 gulp.task( 'release:clean', function( done ) {
   var del = require( 'del' );
-  del( './release', done );
+  del( config.dest, done );
 } );
 
 gulp.task( 'release:copy', function() {
@@ -107,7 +151,7 @@ gulp.task( 'release:copy', function() {
   ];
 
   return gulp.src( src, { base: './' } )
-    .pipe( gulp.dest( './release' ) );
+    .pipe( gulp.dest( config.dest ) );
 } );
 
 gulp.task( 'release:config', function( done ) {
@@ -122,7 +166,7 @@ gulp.task( 'release', function( done ) {
     'release:clean',
     'release:copy',
     'release:config',
-    [ 'javascript', 'stylus' ],
+    [ 'jade', 'javascript', 'stylus' ],
     done
   );
 } );
