@@ -47,7 +47,7 @@ gulp.task( 'javascript', $.watchify( function( watchify ) {
       // hoist_vars: true
   }
   })))
-  .pipe($.rename('app.min.js'))
+  .pipe($.rename('App.min.js'))
   .pipe($.if(!config.isRelease, $.sourcemaps.write('./')))
   .pipe($.if(config.isRelease, gulp.dest(config.dest + '/scripts'), gulp.dest(config.src + '/scripts')))
   .on( 'end', function() {

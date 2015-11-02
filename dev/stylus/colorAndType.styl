@@ -1,5 +1,6 @@
+white = #f0f0f0
 black = #111111
-gray = #F0F0F0
+gray = #111111
 red = #FF6363
 blue = #647FFF
 orange = #FFAF63
@@ -18,12 +19,13 @@ header
 body
   font-size 62.5%
   letter-spacing 0.1rem
+  color: white
   span.bg
     background none
     // line-height 0.7rem
     display inline-block
     // border 2px solid #0000ff
-    border-bottom 1px solid black
+    border-bottom 1px solid white
     &:hover
       color white
       border-bottom 1px solid transparent
@@ -35,7 +37,7 @@ body
   li
     line-height 140%
   a
-    color black
+    color: white
     cursor pointer
     text-decoration underline
     &:hover

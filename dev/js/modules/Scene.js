@@ -1,31 +1,23 @@
 import Detector from '../three/Detector'
 import Stats from '../three/Stats'
 
-export var time = 1000
-export var bPjax = false
-export var bLoading = true
-
 export default class Scene {
 
   constructor() {
-    this.debugging = false
+    this.debugging = true
     this.container = document.getElementById('world')
     this.mouseX = null
     this.mouseY = null
-    this.colors = ['ffffff','EA6A63','61D0EA', 'EAA760','EEEEEE','777777'],
-    this.counter = 0
     this.projects = document.getElementsByClassName('project')
-    this.frequency = 4
     this.bParticles = true
-    this.bLoadingTex = false
     this.tex = null
     this.Height = window.innerHeight
     this.Width = window.innerWidth
     this.windowHalfX =  this.Width / 2
     this.windowHalfY = this.Height / 2
     this.cubes = []
-    this.flyingParticles = []
-    this.particleArray = []
+    this.counter = 0
+    this.frequency = 2
 
     this._bindEvents()
   }
@@ -37,6 +29,7 @@ export default class Scene {
     this._initCamera()
     this._initGeometry()
     this._initLights()
+    this._initTween()
     this._addDomElement()
 
     if (this.debugging) {
@@ -48,8 +41,8 @@ export default class Scene {
 
   _initScene() {
     this.scene = new THREE.Scene()
-    this.scene.overrideMaterial
-    if (!this.debugging) this.scene.fog = new THREE.FogExp2(0xf0f0f0, 0.0005)
+    // this.scene.overrideMaterial
+    this.scene.fog = new THREE.FogExp2(0x111111, 0.0006)
   }
 
   _initClock() {
@@ -77,12 +70,8 @@ export default class Scene {
   }
 
   _initCamera() {
-    if (!this.debugging){
-      var far = 3000
-    }else{
-      var far = 5000
-    }
-    this.camera = new THREE.PerspectiveCamera(60, this.Width / this.Height, 1, far)
+    const far = 3000
+    this.camera = new THREE.PerspectiveCamera(45, this.Width / this.Height, 1, far)
     this.camera.position.x = this.camera.position. y = 0
     this.camera.position.z = far
 
@@ -124,6 +113,9 @@ export default class Scene {
     document.body.appendChild(this.stats.domElement)
   }
 
+  _initTween(){
+  }
+
   _update() {
     window.requestAnimationFrame(() => {
       this._update()
@@ -133,9 +125,25 @@ export default class Scene {
   }
 
   _animate() {
-    this.camera.position.x += (this.mouseX - this.camera.position.x) * .025
-    this.camera.position.y += (-this.mouseY - this.camera.position.y) * .025
+    var time = this.clock.getElapsedTime()
+    // const max = 200
+    // if(this.mouseX >= 0 && this.camera.position.x < max){
+    //   this.camera.position.x += (this.mouseX - this.camera.position.x) * .0015
+    // }else if(this.mouseX < 0 && this.camera.position.x > -max){
+    //   this.camera.position.x += (this.mouseX - this.camera.position.x) * .0015
+    // }
+    // if(this.mouseY >= 0 && this.camera.position.y < max){
+    //   this.camera.position.y += (this.mouseX - this.camera.position.y) * .0015
+    // }else if(this.mouseX < 0 && this.camera.position.x > -max){
+    //   this.camera.position.x += (this.mouseX - this.camera.position.x) * .0015
+    // }
+
+    this.camera.position.x += (this.mouseX - this.camera.position.x) * .002
+    this.camera.position.y += (-this.mouseY - this.camera.position.y) * .002
     this.camera.lookAt(this.scene.position)
+    // console.log(this.camera.position);
+
+    // console.log(this.scene.position);
   }
 
   _render() {

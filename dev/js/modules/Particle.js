@@ -1,11 +1,15 @@
 import Scene from './Scene'
 import TweenMax from '../libs/greensock/src/uncompressed/TweenMax'
 import {GetColor, MouseOn} from './Util'
+import Planet from './Planet.js'
+import LoadingPanel from './LoadingPanel.js'
+import SpaceShuttle from './SpaceShuttle.js'
 
 var pjaxTime = 1000
 var bPjax = false
 var bLoading = false
 var bParticles = true
+
 
 class Transition {
 
@@ -13,7 +17,6 @@ class Transition {
   }
 
   _counter(){
-
     pjaxTime++
     if(pjaxTime > 150 && !bPjax){
       bPjax = true
@@ -22,8 +25,7 @@ class Transition {
   }
 
   _start(flyingParticles){
-
-    console.log('pjaxStart');
+    // console.log('pjaxStart');
     bLoading = true
     bParticles = false
     document.getElementById('wrap').style.display ='none'
@@ -31,9 +33,9 @@ class Transition {
       var p = flyingParticles[i];
       var s = p.mesh.scale.x;
 
-      TweenMax.to(p.mesh.position, 0.6, {
-        x: p.mesh.position.x * 3,
-        y: p.mesh.position.y * 3,
+      TweenMax.to(p.mesh.position, 1, {
+        x: p.mesh.position.x * 2,
+        y: p.mesh.position.y * 2,
         z: 3000,
       	ease: Cubic.In
       });
@@ -41,7 +43,7 @@ class Transition {
   }
 
   _complete(){
-    console.log('pjaxComplete')
+    // console.log('pjaxComplete')
     bPjax = false
     pjaxTime = 0
     this._preLoadImages();
@@ -105,12 +107,73 @@ class Objects {
 
 }
 
-export default class Particle extends Scene{
 
+class Meteorites{
+  constructor(color, shape, texture){
+    this.color = color
+    this.shape = shape
+    this.texture = texture
+  }
+
+  init(){
+    _initMeteorite()
+  }
+
+  _initMeteorite(){
+    if(this.texture){
+      this.color = '#ffffff'
+      this.texture =  THREE.ImageUtils.loadTexture(texture)
+    }else{
+      this.color = color
+      this.tex =  ''
+    }
+    if(shape > 0.5){
+      this.geometry = new THREE.OctahedronGeometry(10, 0)
+      this.material = new THREE.MeshPhongMaterial({
+        color: this.col,
+        shading: THREE.FlatShading,
+        map: this.tex
+      })
+    }else{
+      this.geometry = new THREE.IcosahedronGeometry(10, 0)
+      this.material = new THREE.MeshPhongMaterial({
+        color: this.col,
+        shading: THREE.FlatShading,
+        map: this.tex
+      })
+    }
+    this.mesh = new THREE.Mesh(this.geometry, this.material)
+
+  }
+
+}
+
+
+class loadTex {
+  constructor() {
+
+  }
+}
+
+
+
+export default class Particle extends Scene{
   constructor() {
     super()
     this.transition = new Transition()
     this.transition._counter()
+    this.earthLand = new Planet('EarthLand')
+    this.earthSea = new Planet('EarthSea')
+    this.fire = new Planet('Fire')
+    this.sea = new Planet('Sea')
+    this.shuttle = new SpaceShuttle()
+    this.loading = new LoadingPanel()
+    this.shuttle.init()
+    this.earthLand.init()
+    this.earthSea.init()
+    this.fire.init()
+    this.sea.init()
+    this.loading.init()
     document.body.style.visibility = 'visible';
   }
 
@@ -135,35 +198,103 @@ export default class Particle extends Scene{
 
   _initGeometry() {
     super._initGeometry()
-    this._initLoading()
+    // this.scene.add(this.earthLand._getObjects())
+    // this.scene.add(this.earthSea._getObjects())
+    this.scene.add(this.fire._getObjects())
+    // this.scene.add(this.sea._getObjects())
+    this.loading._getObjects().then(response => {
+      // this.scene.add(response)
+    }, error => {
+    })
+    this.shuttle._getObjects().then(response => {
+      // this.scene.add(response)
+    }, error => {
+    })
+  }
 
+  _initTween(){
+    super._initTween()
+    // TweenMax.to(this.loading.mesh.rotation, 5, {
+    //   // x: Math.PI,
+    //   y: Math.PI*2,
+    //   // z: Math.PI,
+    //   ease: SteppedEase.config(60),
+    //   repeat: -1
+    // })
   }
 
   _animate(){
     super._animate()
     const time = this.clock.getElapsedTime()
+    // if(this.shuttle){
+      // console.log(shuttleRotateY)
+      // console.log(this.shuttle.position.xi
     if(!bLoading && bPjax){
-      console.log(11);
-      TweenMax.to(this.loading.scale, 0.2, {
-        x: 0.00001,
-        z: 0.00001,
-        ease: Cubic.In
-      });
+      // this.earth.mesh.position.z = -500
+      // this.snow.mesh.position.z = -500
+
+        //   console.log(this.earth);
+      // TweenMax.to(this.loading.scale, 0.2, {
+      //   x: 2,
+      //   z: 2,
+      //   ease: Cubic.In
+      // });
+      // this.shuttle.position. z = -500
+      // this.shuttle.position.x = 200
+      // this.shuttle.position.y = 100
+      // TweenMax.to(this.shuttle.position, 2,{
+      //   x: 200,
+      //   z: -1000,
+      //   ease: Cubic.In
+      // })
       bParticles = true
       document.getElementById('wrap').style.display = 'block';
     }else {
-      TweenMax.to(this.loading.scale, 0.4, {
-        x: 7,
-        y: 7,
-        ease: Cubic.In
+      TweenMax.to(this.earthLand.mesh.position, 1.4, {
+        z: 3000,
+        ease: Cubic.In,
+        delay: .3,
+        onComplete: () => {
+          this.earthLand.mesh.position.z = -500
+        }
       });
-      TweenMax.to(this.camera.position, 0.4,{
-        x: 0.5,
-        y: 0.5,
-        ease: Cubic.In
-      });
-    }
+      TweenMax.to(this.earthSea.mesh.position, 1.4, {
+        z: 3000,
+        ease: Cubic.In,
+        delay: .3,
+        onComplete: () => {
+          this.earthSea.mesh.position.z = -500
+        }
 
+      });
+      // TweenMax.to(this.shuttle.position, 3, {
+      //   z: 3500
+      // })
+      // TweenMax.to(this.shuttle.rotation, 3, {
+      //   y: shuttleRotateY,
+      //   onComplete: () => {
+      //     shuttleRotateY = Math.random()* 360 * Math.PI / 180
+      //   }
+      // })
+
+      // TweenMax.to(this.shuttle.rotation, 3,{
+      //   x: 200,
+      //   z: -1000,
+      //   ease: Cubic.In
+      // })
+
+      // TweenMax.to(this.loading.scale, 0.4, {
+      //   x: 0,
+      //   y: 0,
+      //   ease: Cubic.In
+      // });
+      // TweenMax.to(this.camera.position, 0.4,{
+      //   x: 0.5,
+      //   y: 0.5,
+      //   ease: Cubic.In
+      // });
+    }
+  // }
     if(this.cube){
       if(this.cube.position.z >= 3000){
         for (var i = 0; i < this.cubes.length; i++) {
@@ -178,84 +309,87 @@ export default class Particle extends Scene{
       }
     }
     this._updateParticlesLoad()
+    // console.log(this.flyingParticles.length)
   }
   _render() {
     super._render()
   }
 
-  _initLoading(){
-    var textureManager = new THREE.LoadingManager()
-
-    var textureLoader = new THREE.ImageLoader(textureManager)
-    var myTexture = new THREE.Texture()
-    var image = '/images/loading.jpg'
-    textureLoader.load([image], image => {
-        myTexture.image = image
-        this.scene.add(this.loading)
-    })
-
-    var tex = '/images/loading.jpg'
-    var geometry = new THREE.PlaneGeometry(100, 100, 100)
-    var material = new THREE.MeshPhongMaterial({
-      color: '#ffffff',
-      shading: THREE.FlatShading,
-      side: THREE.DoubleSide,
-      map: THREE.ImageUtils.loadTexture(tex)
-    })
-    this.loading = new THREE.Mesh(geometry, material)
-    var s = 5
-    this.loading.scale.set(s, s, 0.0001)
-    this.loading.position.x = this.loading.position.y = 0
-    this.loading.position.z = 1500
-
-    TweenMax.to(this.loading.rotation, 5, {
-      x: Math.PI,
-      y: Math.PI,
-      z: Math.PI,
-      ease: Linear.easeNone,
-      repeat: -1
-    })
-
-  }
-
-
-
   _createParticle(p){
-
     p.mesh.material.needsUpdate =  true
-      // p.mesh.positiond.z = 2000
     if(p.bLoadingTex == false){
       p.mesh.position.x = (-this.Width + Math.random()*this.Width*2) / 3
       p.mesh.position.y = (-this.Height + Math.random()*this.Height*2) / 3
-      var s = 1.1 + Math.random()
     }else {
       p.mesh.position.x = (-this.Width + Math.random()*this.Width * 2)
       p.mesh.position.y = (-this.Height + Math.random()*this.Height * 2)
-      var s = 1.5 + Math.random()
     }
+    const s = 0.1
     p.mesh.scale.set(s,s,s)
 
     this.scene.add(p.mesh)
-    this.particleArray.push(p)
     this.flyingParticles.push(p)
-    this._flyParticle(p)
+    if(bParticles){
+      this._flyParticle(p)
+    }else{
+      this._flyParticleFast(p)
+    }
   }
 
   _flyParticle(p){
     const thisMesh = p.mesh
-    const s = p.mesh.scale.x;
-    const duration = Math.max(p.mesh.scale.x * 6, 4)
+    const s = Math.random() + .5
+
+    var duration = Math.max(s * 6, 4)
+    TweenMax.to(p.mesh.scale, 1, {
+      x: s,
+      y: s,
+      z: s,
+      ease : Quart.In
+    });
     TweenMax.to(p.mesh.rotation, duration, {
       x: s * 4 *Math.random(),
       y: s * 4 *Math.random(),
       z: s * 4 *Math.random(),
-      ease : Quart.out
+      ease : Quart.In
     });
     TweenMax.to(p.mesh.position, duration, {
       x: p.mesh.position.x * 2,
       y: p.mesh.position.y * 2,
       z: 3000,
-      ease: Strong.QuartInOut,
+      ease: Strong.QuartIn,
+      onComplete: () => {
+        this.scene.remove(thisMesh)
+        p.mesh.material.dispose();
+        this.flyingParticles.shift();
+      },
+      onCompleteParams: [p]
+    });
+  }
+
+  _flyParticleFast(p){
+    const thisMesh = p.mesh
+    const s = Math.random() + 0.5
+
+    var duration = Math.max(s * 6, 4)
+    duration = 1
+    TweenMax.to(p.mesh.scale, 0.4, {
+      x: s,
+      y: s,
+      z: s,
+      ease : Quart.In
+    });
+    TweenMax.to(p.mesh.rotation, duration, {
+      x: s * 4 *Math.random(),
+      y: s * 4 *Math.random(),
+      z: s * 4 *Math.random(),
+      ease : Quart.In
+    });
+    TweenMax.to(p.mesh.position, duration, {
+      x: p.mesh.position.x * 1.2,
+      y: p.mesh.position.y * 1.2,
+      z: 3000,
+      ease: Strong.QuartIn,
       onComplete: () => {
         this.scene.remove(thisMesh)
         p.mesh.material.dispose();
@@ -266,8 +400,8 @@ export default class Particle extends Scene{
   }
 
   _getParticle(){
-    if(this.particleArray.length){
-      return this.particleArray.pop();
+    if(this.flyingparticles.length){
+      return this.flyingparticles.pop();
     }else{
       return this._initParticle();
     }
@@ -279,7 +413,7 @@ export default class Particle extends Scene{
   }
 
   _updateParticlesLoad(){
-    if(this.counter % this.frequency == 0 && bParticles){
+    if(this.counter % this.frequency == 0){
       var shape = Math.random()
       var color = GetColor(this.colors, '#')
       var texture = this.tex
@@ -287,7 +421,6 @@ export default class Particle extends Scene{
     }
     this.counter++
   }
-
 
   _loadTex(id){
     if(Modernizr.touch && this.cube){
@@ -307,7 +440,7 @@ export default class Particle extends Scene{
       })
     }
 
-    let geometry = new THREE.BoxGeometry(100, 100, 150)
+    let geometry = new THREE.BoxGeometry(100, 100, 100)
     let material = new THREE.MeshPhongMaterial({
       color: '#ffffff',
       shading: THREE.FlatShading,
@@ -325,21 +458,22 @@ export default class Particle extends Scene{
     this.scene.add(this.cube)
     this.cubes.push(this.cube)
 
-    TweenMax.to(this.cube.position, duration, {
-      x: 200,
-      ease: Cubic.In
-    })
-    TweenMax.to(this.cube.scale, duration, {
+    // TweenMax.to(this.cube.position, duration, {
+    //   // x: 200,
+    //   ease: Cubic.In
+    // })
+    TweenMax.to(this.cube.scale,  .4, {
       x: 5,
       y: 5,
       z: 5,
-      ease: Cubic.In
+      ease: Power2.In,
+      delay: 0.3
     })
-    TweenMax.to(this.cube.rotation, duration, {
-      x: Math.PI * 2,
+    TweenMax.to(this.cube.rotation, 6, {
+      // x: Math.PI * 2,
       y: Math.PI * 2,
-      z: - Math.PI *2,
-      ease: Linear.easeNone,
+      // z: - Math.PI *2,
+      ease: Power0.easeNone,
       repeat: -1
     })
   }

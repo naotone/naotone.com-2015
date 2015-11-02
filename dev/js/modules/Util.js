@@ -35,7 +35,6 @@ export const RgbToHex = function(r, g, b, prefix=''){
     return prefix + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
   }
 
-
 export const HexToTgb = function(hex){
   let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
   return result ? {
