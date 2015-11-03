@@ -1,6 +1,6 @@
 import Space from './modules/Space'
+import MyPjax from './modules/Space'
 import {MouseOn} from './modules/Util'
-
 
 export default class App {
 
@@ -12,6 +12,7 @@ export default class App {
       selectors: ['title', '.js-Pjax', '.pjax']
     })
     this.three = new Space()
+    this.pjax = new MyPjax()
     this.three.init()
     this._bindEvents()
   }
@@ -20,31 +21,27 @@ export default class App {
     const projects = document.getElementsByClassName("project")
     let transitionTrigger = document.querySelectorAll('nav a, h1 a, a.pjax')
 
+    this.pjax._preLoadImages()
     this._onResize()
-    window.addEventListener('resize', (e) => { this._onResize(e) })
+    window.addEventListener('resize', (el) => { this._onResize(el) })
     window.addEventListener('popstate', () => { this.three._popsate() })
 
     for(var i=0; i<transitionTrigger.length; i++){
-      transitionTrigger[i].addEventListener('click',  () => { this.three._start()}, false);
+      transitionTrigger[i].addEventListener('click',  (el) => { this.three._start(el)}, false);
     }
 
     for(var i=0; i<projects.length; i++){
-      projects[i].addEventListener(MouseOn(), (e) => { this.three._initThumbnail(e) })
+      projects[i].addEventListener(MouseOn(), (el) => { this.three._initThumbnail(el) })
       projects[i].addEventListener('mouseleave',  () => { this.three._removeThumbnail() }, false)
     }
-
 
     document.addEventListener('pjax:complete', () => {
       this.three._complete()
 
-      transitionTrigger = document.querySelectorAll('nav a, h1 a, a.pjax')
-      for(var i=0; i<transitionTrigger.length; i++){
-        transitionTrigger[i].addEventListener('click',  () => { this.three._start()}, false);
-      }
-
       if(projects !== null){
         for(var i=0; i<projects.length; i++){
-          projects[i].addEventListener(MouseOn(), (e) => { this.three._initThumbnail(e) })
+          projects[i].addEventListener('click',  (el) => { this.three._start(el)}, false);
+          projects[i].addEventListener(MouseOn(), (el) => { this.three._initThumbnail(el) })
           projects[i].addEventListener('mouseleave',  () => { this.three._removeThumbnail() }, false)
         }
       }
@@ -53,7 +50,7 @@ export default class App {
 
   }
 
-  _onResize(e) {
+  _onResize(el) {
     this.three.camera.aspect = window.innerWidth / window.innerHeight
     this.three.camera.updateProjectionMatrix()
     this.three.renderer.setSize(window.innerWidth, window.innerHeight)

@@ -30,19 +30,24 @@ export default class Cube {
 
     this.mesh.position.copy( camera.position )
     this.mesh.rotation.copy( camera.rotation )
+    // console.log(this.mesh.rotation.y*2)
+    this.mesh.rotation.y = this.mesh.rotation.y - .2
+    // this.mesh.rotation.y = this.mesh.rotation.y + 2
+
     this.mesh.translateZ(-1000)
     this.mesh.translateX(this.windowHalfX / 3 )
 
+
     TweenMax.to(this.mesh.scale,  .4, {
-      x: 2,
-      y: 2,
-      z: 2,
+      x: 1.8,
+      y: 1.8,
+      z: 1.8,
       ease: Power2.In,
       delay: 0.1
     })
-    TweenMax.to(this.mesh.rotation, 6, {
+    TweenMax.to(this.mesh.rotation, 5, {
       // x: Math.PI * 2,
-      y: Math.PI * 2,
+      y: "+=" + Math.PI * 2,
       // z: - Math.PI *2,
       ease: Power0.easeNone,
       repeat: -1

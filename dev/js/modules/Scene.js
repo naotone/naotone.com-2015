@@ -4,7 +4,7 @@ import Stats from '../three/Stats'
 export default class Scene {
 
   constructor() {
-    this.debugging = true
+    this.debugging = false
     this.container = document.getElementById('world')
     this.mouseX = null
     this.mouseY = null

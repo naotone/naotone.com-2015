@@ -19,7 +19,7 @@ export var bParticles = true
 export var bThumbnail = false
 export var thumbnail = null
 
-class Pjax {
+export class Pjax {
   constructor() {
   }
 
@@ -31,10 +31,36 @@ class Pjax {
     requestAnimationFrame(this._counter.bind(this))
   }
 
-  _start(flyingParticles){
-    console.log('pjaxStart', document.location);
-    console.log(this.cube)
-    if(document.location.pathname.indexOf('works'))
+  _start(el, flyingParticles, cubes){
+    // console.log('pjaxStart', document.location);
+    console.log(el);
+    let target = el.target.href
+    let lcoation = window.location.href.indexOf('works')
+    if(cubes.length > 0 && target.indexOf('works') > -1){
+      for (var i = 0; i < cubes.length; i++) {
+        let cube = cubes[i]
+        cube.material.transparent = true
+        TweenMax.to(cube.rotation, 2, {
+          y: 0,
+          ease: Cubic.In
+        })
+        TweenMax.to(cube.position, 2, {
+          x: 0,
+          y: 0,
+          ease: Cubic.In
+        })
+        TweenMax.to(cube.material, 2, {
+          opacity: 0.5,
+          ease: Cubic.In
+        })
+        // console.log(cube, cube.material);
+      }
+    }else if(cubes.length > 0 && !target.indexOf('works') > -1 ){
+      
+    }
+
+
+
     bLoading = true
     bParticles = false
     // console.log(bParticles);
@@ -53,7 +79,7 @@ class Pjax {
   }
 
   _complete(){
-    console.log('pjaxComplete', document.location);
+    // console.log('pjaxComplete', window.location);
 
     bPjax = false
     pjaxTime = 0
@@ -61,15 +87,19 @@ class Pjax {
   }
 
   _popstate(){
-    console.log(document.location);
+    console.log(window.location.href.indexOf("works") > -1);
+    // let location = window.location
+    // if(location.indexOf)
+    // if(window.location.href.indexOf("franky") > -1) {
+
 
   }
 
   _preLoadImages(){
-    const projects = document.getElementsByClassName("project");
+    let projects = document.getElementsByClassName("project")
     if(projects.length > 0){
       let textureManager = new THREE.LoadingManager()
-      textureManager.onLoad = function () {
+      textureManager.onLoad = () => {
           bLoading = false;
       }
       let textureLoader = new THREE.ImageLoader(textureManager)
@@ -120,13 +150,17 @@ export default class Space extends Scene{
     document.body.style.visibility = 'visible';
   }
 
-  _start(){
-    this.pjax._start(this.meteors.flyingParticles)
+  _start(el){
+    this.pjax._start(el, this.meteors.flyingParticles, this.cube.cubes)
   }
 
   _complete(){
     this.pjax._complete()
   }
+
+    _preLoadImages(){
+      this.pjax._preLoadImages()
+    }
 
   _popsate(){
     this.pjax._popstate()
@@ -151,6 +185,7 @@ export default class Space extends Scene{
   _initScene() {
     super._initScene()
   }
+
   _initCamera() {
     super._initCamera()
   }
