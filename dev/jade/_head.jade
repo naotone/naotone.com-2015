@@ -1,12 +1,23 @@
 doctype html
 html(lang="en")
-  head
-    if(head.title)
-      title #{head.title} | Naoto Yoshimoto
-    else
+  head(prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#")
+    if(!head.title)
       title Naoto Yoshimoto
+      meta(property='og:title' content='Naoto Yoshimoto')
+    else
+      title #{head.title} | Naoto Yoshimoto
+      meta(property='og:title' content='#{head.title} | Naoto Yoshimoto')
+      meta(property='og:image' content='http://naotone.com/images/#{head.url}.jpg')
+
+    meta(property='og:image' content='http://naotone.com/images/ogp.jpg')
+    meta(property='og:site_name' content='Naoto Yoshimoto')
+    meta(property='og:type' content='website')
+    meta(property='og:locale' content='en_US')
+
     meta(charset='UTF-8')
-    meta(name='viewport', content='initial-scale=1.0, user-scalable=no')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0, user-scalable=no')
+    link(rel='stylesheet' type='text/css' href='//cloud.typography.com/7437872/649528/css/fonts.css')
     link(rel='stylesheet' href='/style.css')
+    
     //- <script src="https://use.typekit.net/svn8kad.js"></script>
     //- <script>try{Typekit.load({ async: true });}catch(e){}</script>

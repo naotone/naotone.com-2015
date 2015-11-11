@@ -1,6 +1,6 @@
 export default class LoadingPanel{
   constructor(){
-    this.image = '/images/test1.jpg'
+    this.image = '/images/loading.jpg'
     this.scale = 4
   }
 

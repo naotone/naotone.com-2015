@@ -4,8 +4,9 @@ import {pjaxTime, bPjax, bLoading, bParticles, bThumbnail, thumbnail} from './Sp
 
 export class Meteor {
   constructor(color, shape, texture){
-
+    !color ? color = '#ffffff' : color
     if(texture){
+      texture = texture.replace(/images\//g, 'images/128/')
       this.col = '#ffffff'
       this.tex =  THREE.ImageUtils.loadTexture(texture)
     }else{
@@ -37,7 +38,6 @@ export class Meteors{
     this.colors = ['ffffff','EA6A63','61D0EA', 'EAA760','EEEEEE','777777'],
     this.flyingParticles = []
     this.counter = 0
-    this.frequency = 2
     this.Height = window.innerHeight
     this.Width = window.innerWidth
   }
@@ -52,6 +52,9 @@ export class Meteors{
       if(this.cube.position.z >= 3000){
         for (var i = 0; i < this.cubes.length; i++) {
           this.scene.remove(this.cubes[i])
+          this.cubes[i].geometry.dispose()
+          this.cubes[i].material.dispose()
+          this.cubes[i].texture.dispose()
         }
         this.cubes = []
       }
@@ -70,8 +73,10 @@ export class Meteors{
       p.mesh.position.x = (-this.Width + Math.random()*this.Width*2) / 3
       p.mesh.position.y = (-this.Height + Math.random()*this.Height*2) / 3
     }else {
-      p.mesh.position.x = (-this.Width + Math.random()*this.Width * 2)
-      p.mesh.position.y = (-this.Height + Math.random()*this.Height * 2)
+      p.mesh.position.x = (-this.Width + Math.random()*this.Width*2) / 3
+      p.mesh.position.y = (-this.Height + Math.random()*this.Height*2) / 3
+      // p.mesh.position.x = (-this.Width + Math.random()*this.Width * 2)
+      // p.mesh.position.y = (-this.Height + Math.random()*this.Height * 2)
     }
     const scale = 0.1
     p.mesh.scale.set(scale, scale, scale)
@@ -84,7 +89,7 @@ export class Meteors{
 
   _flyParticle(p, mode){
     const thisMesh = p.mesh
-    const scale = Math.random() + .2
+    const scale = 0.4
 
     let duration = Math.max(scale * 6, 4)
     let scaleDuration = 1
@@ -93,7 +98,6 @@ export class Meteors{
        scaleDuration = 0.4
        duration = 1
     }
-
 
     TweenMax.to(p.mesh.scale, scaleDuration, {
       x: scale,
@@ -108,8 +112,8 @@ export class Meteors{
       ease : Quart.In
     });
     TweenMax.to(p.mesh.position, duration, {
-      x: p.mesh.position.x * 2,
-      y: p.mesh.position.y * 2,
+      x: p.mesh.position.x * 1.5,
+      y: p.mesh.position.y * 1.5,
       z: 3000,
       ease: Strong.QuartIn
     });

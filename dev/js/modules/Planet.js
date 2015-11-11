@@ -15,29 +15,61 @@ export default class Planet {
     // IcosahedronGeometry　
     switch (this.type) {
       case 'EarthLand':
-        this.colors = ['80C8FF']
-        this.geometry = new THREE.IcosahedronGeometry(100, 2)
+        this.colors = ['329A47']
+        this.geometry = new THREE.IcosahedronGeometry(199, 2)
+        this.shininess = 30
+        this.position = { x:500, y:300}
+        this.rotation = {duration: 50, x: 1, y: 1}
+        this.noise = 20
         break;
       case 'EarthSea':
-        this.colors = ['69C044']
-        this.geometry = new THREE.IcosahedronGeometry(100, 2)
+        this.colors = ['4891DE']
+        this.geometry = new THREE.IcosahedronGeometry(200, 2)
+        this.shininess = 70
+        this.position = { x:500, y:300}
+        this.rotation = {duration: 50, x: 1, y: 1}
+        this.noise = 20
         break;
       case'EarthCloud':
         this.colors = ['ffffff']
-        this.geometry = new THREE.IcosahedronGeometry(99, 2)
-        this.opacity = 0.8
+        this.geometry = new THREE.IcosahedronGeometry(195, 2)
+        // this.opacity = 1
+        this.shininess = 30
+        this.position = {x:500, y:300}
+        this.rotation = {duration: 50, x: 1, y: 1}
+        this.noise = 20
         break;
       case 'Fire':
         this.colors = ['f7461f', 'e95b2f', 'cd3006']
-        this.geometry = new THREE.OctahedronGeometry(60, 4)
+        this.geometry = new THREE.OctahedronGeometry(200, 5)
+        this.shininess = 30
+        this.position = {x:-500, y:-500}
+        this.rotation = {duration: 80, x: -1, y: 1}
+        this.noise = 30
+        break;
+      case 'Ice':
+        this.colors = ['cdd8e7', 'f2ede6', 'edfbfc']
+        this.geometry = new THREE.OctahedronGeometry(600, 6)
+        this.shininess = 300
+        this.position = {x:1000, y:1000}
+        this.rotation = {duration: 100, x: 1, y: -1}
+        this.noise = 30
         break;
       case 'Sea':
-        this.colors = ['cdd8e7', 'f2ede6', 'edfbfc']
-        this.geometry = new THREE.OctahedronGeometry(200, 4)
+        this.colors = ['27CDF6', '48DDDE', '79D2EA']
+        this.geometry = new THREE.IcosahedronGeometry(300, 3)
+        this.shininess = 200
+        this.position = {x: -499, y: 200}
+        this.rotation = {duration: 50, x: 1, y: 1}
+        this.noise = 20
         break;
       default:
         this.colors = ['cdd8e7', 'f2ede6', 'edfbfc']
         this.geometry = new THREE.OctahedronGeometry(200, 4)
+        this.shininess = 30
+        this.position = {x:1000, y:1000}
+        this.rotation = {duration: 50, x: 1, y: 1}
+        this.noise = 30
         break;
     }
 
@@ -45,15 +77,15 @@ export default class Planet {
       color: 0xffffff,
       vertexColors: THREE.FaceColors,
       shading: THREE.FlatShading,
-      shininess: 0,
-      opacity: this.opacity,
+      shininess:this.shininess,
+      // opacity: this.opacity,
       transparent: true
     })
 
     this.mesh = new THREE.Mesh(this.geometry, this.material)
-    this.mesh.position.set(500, -200, -500)
-    this.mesh.position.set(0, 0, 2000)
+    this.mesh.position.set(this.position.x, this.position.y, -1000)
 
+    this.mesh.castShadow = true
 
     for(var i = 0; i < this.mesh.geometry.faces.length; i++){
       let col = GetColor(this.colors, '0x')
@@ -61,16 +93,16 @@ export default class Planet {
     }
 
     for(var i = 0; i < this.mesh.geometry.vertices.length; i++){
-      this.mesh.geometry.vertices[i].x += 5*Math.random()
-      this.mesh.geometry.vertices[i].y += 5*Math.random()
-      this.mesh.geometry.vertices[i].z += 5*Math.random()
+      this.mesh.geometry.vertices[i].x += this.noise*Math.random()
+      this.mesh.geometry.vertices[i].y += this.noise*Math.random()
+      this.mesh.geometry.vertices[i].z += this.noise*Math.random()
     }
 
-    TweenMax.to(this.mesh.rotation, 20, {
-      x: Math.PI*2,
-      y: Math.PI*2,
+    TweenMax.to(this.mesh.rotation, this.rotation.duration, {
+      x: Math.PI*2 * this.rotation.x,
+      y: Math.PI*2 * this.rotation.y,
       // z: Math.PI,
-      ease: SteppedEase.config(500),
+      ease: Power0.easeNone,
       repeat: -1
     })
   }

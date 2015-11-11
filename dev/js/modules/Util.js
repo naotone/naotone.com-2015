@@ -1,11 +1,18 @@
 export const MouseOn = function(){
   if(Modernizr.touch){
-    return 'touchstart'
+    return 'click'
   }else{
     return 'mouseenter'
   }
 }
 
+export const MouseOff = function(){
+  if(Modernizr.touch){
+    return 'touchend'
+  }else{
+    return 'mouseleave'
+  }
+}
 
 export const AddClass = function(el, _class){
   return  el.className += ' ' + _class

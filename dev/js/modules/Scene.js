@@ -1,5 +1,6 @@
 import Detector from '../three/Detector'
 import Stats from '../three/Stats'
+import {HasClass} from './Util'
 
 export default class Scene {
 
@@ -9,7 +10,6 @@ export default class Scene {
     this.mouseX = null
     this.mouseY = null
     this.projects = document.getElementsByClassName('project')
-    this.bParticles = true
     this.tex = null
     this.Height = window.innerHeight
     this.Width = window.innerWidth
@@ -17,7 +17,7 @@ export default class Scene {
     this.windowHalfY = this.Height / 2
     this.cubes = []
     this.counter = 0
-    this.frequency = 2
+    this.frequency = 3
 
     this._bindEvents()
   }
@@ -41,8 +41,8 @@ export default class Scene {
 
   _initScene() {
     this.scene = new THREE.Scene()
-    // this.scene.overrideMaterial
-    this.scene.fog = new THREE.FogExp2(0x111111, 0.0006)
+    this.scene.fog = new THREE.FogExp2(0x111111, 0.0005) //3
+    // this.scene.fog = new THREE.FogExp2(0x111111, 0.0006)
   }
 
   _initClock() {
@@ -89,7 +89,7 @@ export default class Scene {
   }
 
   _initLights() {
-    this.shadowLight = new THREE.DirectionalLight(0xffffff, 1.5)
+    this.shadowLight = new THREE.DirectionalLight(0xffffff, 1.15)
     this.shadowLight.position.set(20, 0, 10)
     this.shadowLight.castShadow = true
     this.shadowLight.shadowDarkness = 0.01
@@ -97,10 +97,12 @@ export default class Scene {
 
     this.light = new THREE.DirectionalLight(0xffffff, .5)
     this.light.position.set(-20, 0, 20)
+    // this.shadowLight.castShadow = true
     this.scene.add(this.light)
 
     this.backLight = new THREE.DirectionalLight(0xffffff, .1)
     this.backLight.position.set(0, 0, -20)
+    // this.shadowLight.castShadow = true
     this.scene.add(this.backLight)
   }
 
@@ -137,13 +139,15 @@ export default class Scene {
     // }else if(this.mouseX < 0 && this.camera.position.x > -max){
     //   this.camera.position.x += (this.mouseX - this.camera.position.x) * .0015
     // }
-
-    this.camera.position.x += (this.mouseX - this.camera.position.x) * .002
-    this.camera.position.y += (-this.mouseY - this.camera.position.y) * .002
+    if(!document.querySelectorAll('#works.single').length > 0){
+      this.camera.position.x += (this.mouseX - this.camera.position.x) * .002
+      this.camera.position.y += (-this.mouseY - this.camera.position.y) * .002
+    }else{
+      // this.camera.position.x = 0
+      // this.camera.position.y = 0
+    }
     this.camera.lookAt(this.scene.position)
     // console.log(this.camera.position);
-
-    // console.log(this.scene.position);
   }
 
   _render() {

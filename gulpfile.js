@@ -1,4 +1,4 @@
-var files = ['**/*.html', '**/*.php', '**/scripts/app.min.js', '**/style.css'];
+var files = ['**/*.html', '**/*.php', '**/scripts/App.min.js', '**/style.css'];
 
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
@@ -87,6 +87,7 @@ gulp.task( 'watch:js', function( done ) {
 gulp.task( 'server', function() {
   browser.init( {
     browser: 'Google Chrome Canary',
+    notify: false,
     server: {
       baseDir: config.src
     }
@@ -144,13 +145,14 @@ gulp.task( 'release:clean', function( done ) {
 
 gulp.task( 'release:copy', function() {
   var src = [
-    './index.html',
-    './images/**'
-    // './scripts/libs/**'
+    // './**/*.html',
+    './src/images/**',
+    './src/scripts/lib/pjax.0.1.4.js',
+    './src/scripts/lib/modernizr.custom.80335.js'
     // config.src + '/fonts/**'
   ];
 
-  return gulp.src( src, { base: './' } )
+  return gulp.src( src, { base: './src' } )
     .pipe( gulp.dest( config.dest ) );
 } );
 
