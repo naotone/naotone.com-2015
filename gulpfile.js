@@ -147,6 +147,7 @@ gulp.task( 'release:copy', function() {
   var src = [
     // './**/*.html',
     './src/images/**',
+    './src/fonts/**',
     './src/scripts/lib/pjax.0.1.4.js',
     './src/scripts/lib/modernizr.custom.80335.js'
     // config.src + '/fonts/**'
