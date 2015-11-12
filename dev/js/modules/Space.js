@@ -279,7 +279,7 @@ export default class Space extends Scene{
     const thisScene = this.scene
     const regex = new RegExp('http[s]?:[/]+.*[/]*([^/]*)/works/[a-zA-Z0-9]+\/.*', 'g')
     let target = window.location.href
-    if (!target.match(regex) && this.cube.cubes.length > 0){
+    if (!target.match(regex)){
       for (var i = 0; i < this.cube.cubes.length; i++) {
         let cube = this.cube.cubes[i]
         TweenMax.to(cube.rotation, 1, {
