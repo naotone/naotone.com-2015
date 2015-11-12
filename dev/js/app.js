@@ -9,7 +9,7 @@ export default class App {
     this.mouseEnabled = false
     new Pjax({
       elements: 'a[href]', // default is 'a[href], form[action]'
-      selectors: ['title', 'meta', '.js-Pjax', '.pjax']
+      selectors: ['title', 'meta[property="og:title"]', 'meta[property="og:image"]', '.js-Pjax', '.pjax']
     })
     this.three = new Space()
     this.style = new Style()
