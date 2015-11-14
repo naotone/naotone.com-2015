@@ -157,6 +157,14 @@ gulp.task( 'release:copy', function() {
     .pipe( gulp.dest( config.dest ) );
 } );
 
+gulp.task( 'release:sitemap', function(done) {
+  return gulp.src(config.dest + '/**/*.html')
+  .pipe($.sitemap({
+    siteUrl: 'http://naotone.com'
+  }))
+  .pipe(gulp.dest(config.dest))
+});
+
 gulp.task( 'release:config', function( done ) {
   config.isRelease = true;
   done();
@@ -170,6 +178,7 @@ gulp.task( 'release', function( done ) {
     'release:copy',
     'release:config',
     [ 'jade', 'javascript', 'stylus' ],
+    'release:sitemap',
     done
   );
 } );
