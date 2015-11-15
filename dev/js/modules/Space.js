@@ -177,6 +177,11 @@ export class Pjax {
           bLoading = false
           // console.log('Finish preload images ------------------');
       }
+      textureManager.onError = () => {
+          bLoading = false
+          // console.log('Finish preload images ------------------');
+      }
+
       let textureLoader = new THREE.ImageLoader(textureManager)
       let textures = []
       let texture = new THREE.Texture()
