@@ -18,7 +18,7 @@ export var bLoading = true
 export var bParticles = false
 export var bThumbnail = false
 export var thumbnail = null
-export var flag = true
+export var bBox = true
 
 
 export class Pjax {
@@ -37,7 +37,7 @@ export class Pjax {
     // console.log('start');
     let target = el.target.href
     let lcoation = window.location.href.indexOf('works')
-    flag = false
+    bBox = false
 
     AddClass(document.body, 'stopScrolling')
     document.body.addEventListener("touchmove", (el) => {
@@ -101,7 +101,7 @@ export class Pjax {
           y: 0,
           ease: Cubic.In,
           onComplete () {
-            flag = true
+            bBox = true
           }
         })
         // TweenMax.to(cube.material, 1.5, {
@@ -112,7 +112,7 @@ export class Pjax {
       }
 
     }else if(target.indexOf('works')){
-      flag = true
+      bBox = true
 
       for (var i = 0; i < cubes.length; i++) {
         let cube = cubes[i]
@@ -123,7 +123,7 @@ export class Pjax {
       }
 
     }else{
-      flag = true
+      bBox = true
     }
 
     bLoading = true
@@ -154,7 +154,7 @@ export class Pjax {
 
   _popstate(){
     // console.log(window.location.href.indexOf("works") > -1);
-    // flag = true
+    // bBox = true
     // thumbnail = null
     // bThumbnail = false
   }
@@ -307,7 +307,7 @@ export default class Space extends Scene{
         })
       }
       this.cube.cubes = []
-      flag = true
+      bBox = true
       thumbnail = null
       bThumbnail = false
     }else if(target.match(regex)){
@@ -316,7 +316,7 @@ export default class Space extends Scene{
         this.cube.cubes.push(this.cube._getObjects())
       }
     }else{
-      flag = true
+      bBox = true
       thumbnail = null
       bThumbnail = false
     }
@@ -392,7 +392,7 @@ export default class Space extends Scene{
   }
 
   _removeThumbnail(){
-    if(flag){
+    if(bBox){
       thumbnail = null
       this.cube._removeCube().then(response => {
         this.scene.remove(response)
