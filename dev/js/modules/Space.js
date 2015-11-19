@@ -104,11 +104,6 @@ export class Pjax {
             bBox = true
           }
         })
-        // TweenMax.to(cube.material, 1.5, {
-        //   opacity: 0.5,
-        //   ease: Cubic.In
-        // })
-        // console.log(cube, cube.material);
       }
 
     }else if(target.indexOf('works')){
@@ -148,15 +143,10 @@ export class Pjax {
     bPjax = false
     pjaxTime = 0
     this._preLoadImages();
-    // this.style.init()
-
   }
 
   _popstate(){
-    // console.log(window.location.href.indexOf("works") > -1);
-    // bBox = true
-    // thumbnail = null
-    // bThumbnail = false
+
   }
 
   _onLoad(){
@@ -238,34 +228,21 @@ export default class Space extends Scene{
 
   _start(el){
     this.pjax._start(el, this.scene, this.camera,this.meteors.flyingParticles, this.cube.cubes)
+
     let rand = Math.random()*100
-    console.log(~~rand);
-    if(~~rand % 4 == 0){
-      TweenMax.to(this.earth.position, 3,{
+
+    const planets = [this.earth, this.ice.mesh, this.fire.mesh, this.sea.mesh]
+    let planet = planets[Math.floor(Math.random() * planets.length)];
+
+    let positionX = (Math.random() > 0.5) ? Math.random() * (this.Width - this.windowHalfX) + this.windowHalfX : -1 * (Math.random() * (this.Width - this.windowHalfX) + this.windowHalfX)
+    let positionY = (Math.random() > 0.5) ? Math.random() * (this.Height - this.windowHalfY) + this.windowHalfY : -1 * (Math.random() * (this.Height - this.windowHalfY) + this.windowHalfY)
+    console.log(positionX, positionY)
+    if(~~rand % 1 == 0){
+      planet.position.set(positionX, positionY, -1000)
+      TweenMax.to(planet.position, 3,{
         z: 5000,
-        delay: 1,
-        ease: Strong.CubicIn
-      })
-    }
-    if(~~rand % 5 == 0){
-      TweenMax.to(this.ice.mesh.position, 3,{
-        z: 5000,
-        delay: 1.4,
-        ease: Strong.CubicIn
-      })
-    }
-    if(~~rand % 6 == 0){
-      TweenMax.to(this.fire.mesh.position, 3,{
-        z: 5000,
-        delay: 1.1,
-        ease: Strong.CubicIn
-      })
-    }
-    if(~~rand % 7 == 0){
-      TweenMax.to(this.sea.mesh.position, 3,{
-        z: 5000,
-        delay: 1.6,
-        ease: Strong.CubicIn
+        delay: Math.random() + 0.3,
+        ease: Strong.Cubic
       })
     }
   }
@@ -424,7 +401,6 @@ export default class Space extends Scene{
     this.counter < 1000 ? this.counter++ : this.counter = 0
     // console.log(this.counter)
     // console.log(pjaxTime);
-   // this.scene.add(this.meteors._updateParticlesLoad())
   }
 
   _render() {

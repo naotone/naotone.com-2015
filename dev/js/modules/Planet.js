@@ -19,7 +19,7 @@ export default class Planet {
         this.geometry = new THREE.IcosahedronGeometry(199, 2)
         this.shininess = 30
         this.position = { x:500, y:300}
-        this.rotation = {duration: 50, x: 1, y: 1}
+        this.rotation = {duration: 10, x: 1, y: 1}
         this.noise = 20
         break;
       case 'EarthSea':
@@ -27,7 +27,7 @@ export default class Planet {
         this.geometry = new THREE.IcosahedronGeometry(200, 2)
         this.shininess = 70
         this.position = { x:500, y:300}
-        this.rotation = {duration: 50, x: 1, y: 1}
+        this.rotation = {duration: 10, x: 1, y: 1}
         this.noise = 20
         break;
       case'EarthCloud':
@@ -36,7 +36,7 @@ export default class Planet {
         // this.opacity = 1
         this.shininess = 30
         this.position = {x:500, y:300}
-        this.rotation = {duration: 50, x: 1, y: 1}
+        this.rotation = {duration: 10, x: 1, y: 1}
         this.noise = 20
         break;
       case 'Fire':
@@ -44,15 +44,15 @@ export default class Planet {
         this.geometry = new THREE.OctahedronGeometry(200, 5)
         this.shininess = 30
         this.position = {x:-500, y:-500}
-        this.rotation = {duration: 80, x: -1, y: 1}
+        this.rotation = {duration: 5, x: -1, y: 1}
         this.noise = 30
         break;
       case 'Ice':
         this.colors = ['cdd8e7', 'f2ede6', 'edfbfc']
-        this.geometry = new THREE.OctahedronGeometry(600, 6)
+        this.geometry = new THREE.OctahedronGeometry(400, 6)
         this.shininess = 300
         this.position = {x:1000, y:1000}
-        this.rotation = {duration: 100, x: 1, y: -1}
+        this.rotation = {duration: 8, x: 1, y: -1}
         this.noise = 30
         break;
       case 'Sea':
@@ -60,7 +60,7 @@ export default class Planet {
         this.geometry = new THREE.IcosahedronGeometry(300, 3)
         this.shininess = 200
         this.position = {x: -499, y: 200}
-        this.rotation = {duration: 50, x: 1, y: 1}
+        this.rotation = {duration: 12, x: 1, y: 1}
         this.noise = 20
         break;
       default:
@@ -83,7 +83,7 @@ export default class Planet {
     })
 
     this.mesh = new THREE.Mesh(this.geometry, this.material)
-    this.mesh.position.set(this.position.x, this.position.y, -1000)
+    this.mesh.position.set(0, 0, -1000)
 
     this.mesh.castShadow = true
 
