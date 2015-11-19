@@ -236,11 +236,11 @@ export default class Space extends Scene{
 
     let positionX = (Math.random() > 0.5) ? Math.random() * (this.Width - this.windowHalfX) + this.windowHalfX : -1 * (Math.random() * (this.Width - this.windowHalfX) + this.windowHalfX)
     let positionY = (Math.random() > 0.5) ? Math.random() * (this.Height - this.windowHalfY) + this.windowHalfY : -1 * (Math.random() * (this.Height - this.windowHalfY) + this.windowHalfY)
-    console.log(positionX, positionY)
+
     if(~~rand % 1 == 0){
       planet.position.set(positionX, positionY, -1000)
       TweenMax.to(planet.position, 3,{
-        z: 5000,
+        z: 4000,
         delay: Math.random() + 0.3,
         ease: Strong.Cubic
       })

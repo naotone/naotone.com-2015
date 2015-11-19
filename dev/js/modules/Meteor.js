@@ -88,11 +88,11 @@ export class Meteors{
   }
 
   _flyParticle(p, mode){
-    const thisMesh = p.mesh
-    const scale = 0.4
-
-    let duration = Math.max(scale * 6, 4)
+    let thisMesh = p.mesh
+    let scale = thisMesh.scale.x * Math.random() * 7
+    let duration = 4
     let scaleDuration = 1
+    let rotate = Math.random() > 0.5 ? scale : - scale
 
     if(mode == 'fast'){
        scaleDuration = 0.4
@@ -106,10 +106,10 @@ export class Meteors{
       ease : Quart.In
     });
     TweenMax.to(p.mesh.rotation, duration, {
-      x: scale * 4 *Math.random(),
-      y: scale * 4 *Math.random(),
-      z: scale * 4 *Math.random(),
-      ease : Quart.In
+      x: Math.PI * 2 * rotate,
+      y: Math.PI * 2 * rotate,
+      z: Math.PI * 2 * rotate,
+      ease : Power0.easeNone
     });
     TweenMax.to(p.mesh.position, duration, {
       x: p.mesh.position.x * 1.5,
@@ -121,14 +121,14 @@ export class Meteors{
   }
 
   _createParticles(){
-    var p = this._getParticle();
+    let p = this._getParticle();
     this._flyParticle(p);
   }
 
   _updateParticlesLoad(){
-    var shape = Math.random()
-    var color = GetColor(this.colors, '#')
-    var texture = thumbnail
+    let shape = Math.random()
+    let color = GetColor(this.colors, '#')
+    let texture = thumbnail
       return this._createParticle(new Meteor(color, shape, texture) )
   }
 
