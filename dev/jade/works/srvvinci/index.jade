@@ -1,20 +1,19 @@
-- var head = { title: 'Works - Srv.vinci', url: 'srvvinci' }
+extends ../../_layout.jade
+block vars
+  - var head = { title: 'Works - Srv.vinci', url: 'srvvinci' }
 
-include ../../_header.jade
-
-#wrap
-  .inner.js-Pjax
-    section#works.single
-      header
-        h1 Srv.vinci<br>Mad Me More Softly
-        a(href="http://srv-vinci.jp/madmemoresoftly/") http://srv-vinci.jp/madmemoresoftly
-      .content
-        ul
-          li Year: 2015
-          li Design: Tsubasa Hamaguchi
-          li Coding: Naoto Yoshimoto
-          li Three.js
-        .images
-          img(src="/images/srvvinci_1.jpg" alt="")
-
-include ../../_footer.jade
+block content 
+  #wrap
+    .inner.js-Pjax
+      section#works.single
+        header
+          h1 Srv.vinci<br>Mad Me More Softly
+          a(href="http://srv-vinci.jp/madmemoresoftly/") http://srv-vinci.jp/madmemoresoftly
+        .content
+          ul
+            li Year: 2015
+            li Design: Tsubasa Hamaguchi
+            li Coding: Naoto Yoshimoto
+            li Three.js
+          .images
+            img(src="/images/srvvinci_1.jpg" alt="")

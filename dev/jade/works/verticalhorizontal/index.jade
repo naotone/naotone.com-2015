@@ -1,20 +1,19 @@
-- var head = { title: 'Works - Vertical Horizontal', url: 'verticalhorizontal' }
+extends ../../_layout.jade
+block vars
+  - var head = { title: 'Works - Vertical Horizontal', url: 'verticalhorizontal' }
 
-include ../../_header.jade
-
-#wrap
-  .inner.js-Pjax
-    section#works.single
-      header
-        h1 Vertical Horizontal<br> with Junichi Oguro
-      .content
-        ul
-          li Year: 2014
-          li openFrameworks(C++), Max MSP Jitter, VDMX
-        .embed-container
-          iframe(src='https://www.youtube.com/embed/ePGgewK8nDk' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen)
-        .images
-          img(src="/images/verticalhorizontal_1.jpg" alt="")
-          img(src="/images/verticalhorizontal_2.jpg" alt="")
-
-include ../../_footer.jade
+block content 
+  #wrap
+    .inner.js-Pjax
+      section#works.single
+        header
+          h1 Vertical Horizontal<br> with Junichi Oguro
+        .content
+          ul
+            li Year: 2014
+            li openFrameworks(C++), Max MSP Jitter, VDMX
+          .embed-container
+            iframe(src='https://www.youtube.com/embed/ePGgewK8nDk' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen)
+          .images
+            img(src="/images/verticalhorizontal_1.jpg" alt="")
+            img(src="/images/verticalhorizontal_2.jpg" alt="")

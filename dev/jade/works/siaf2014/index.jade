@@ -1,25 +1,23 @@
-- var head = { title: 'Works - Sapporo International Art Festival 2014', url: 'siaf2014' }
+extends ../../_layout.jade
+block vars
+  - var head = { title: 'Works - Sapporo International Art Festival 2014', url: 'siaf2014' }
 
-include ../../_header.jade
-
-#wrap
-  .inner.js-Pjax
-    section#works.single
-      header
-        h1 Sapporo International Art Festival 2014
-        a(href="http://www.sapporo-internationalartfestival.jp/2014/en/") http://www.sapporo-internationalartfestival.jp/2014/en/
-      .content
-        ul
-          li Year: 2014
-          li Art Direction: Rikako Nagashima
-          li Design: Syu Fukushima
-          li Coding: Motohiro Sunouchi, Hidenori Ikeda, Naoto Yoshimoto
-          li Project Management: Kohei Kawaminami
-          li Direction: Kurashikata Bokenka #heyeoto
-        .images
-          img(src="/images/siaf_1.jpg" alt="")
-          img(src="/images/siaf_2.jpg" alt="")
-          img(src="/images/siaf_3.jpg" alt="")
-
-
-include ../../_footer.jade
+block content 
+  #wrap
+    .inner.js-Pjax
+      section#works.single
+        header
+          h1 Sapporo International Art Festival 2014
+          a(href="http://www.sapporo-internationalartfestival.jp/2014/en/") http://www.sapporo-internationalartfestival.jp/2014/en/
+        .content
+          ul
+            li Year: 2014
+            li Art Direction: Rikako Nagashima
+            li Design: Syu Fukushima
+            li Coding: Motohiro Sunouchi, Hidenori Ikeda, Naoto Yoshimoto
+            li Project Management: Kohei Kawaminami
+            li Direction: Kurashikata Bokenka #heyeoto
+          .images
+            img(src="/images/siaf_1.jpg" alt="")
+            img(src="/images/siaf_2.jpg" alt="")
+            img(src="/images/siaf_3.jpg" alt="")

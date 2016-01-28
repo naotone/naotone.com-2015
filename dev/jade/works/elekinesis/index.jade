@@ -1,25 +1,23 @@
-- var head = { title: 'Works - ELEKINESIS', url: 'elekinesis' }
+extends ../../_layout.jade
+block vars
+  - var head = { title: 'Works - ELEKINESIS', url: 'elekinesis' }
 
-include ../../_header.jade
-
-#wrap
-  .inner.js-Pjax
-    section#works.single
-      header
-        h1 ELEKINESIS
-        a(href="http://elekinesis.com/va/") http://elekinesis.com/va/
-        br 
-        a(href="http://elekinesis.com/06/") http://elekinesis.com/06/
-        br
-        a(href="http://workshop.elekinesis.com/01/") http://elekinesis.com/workshop/
-      ul
-        li Year: 2013
-        li Design: Hirofumi Abe
-        li Coding: Naoto Yoshimoto
-      .images
-        img(src="/images/elekinesis_1.jpg" alt="")
-        img(src="/images/elekinesis_2.jpg" alt="")
-        img(src="/images/elekinesis_3.jpg" alt="")
-
-
-include ../../_footer.jade
+block content 
+  #wrap
+    .inner.js-Pjax
+      section#works.single
+        header
+          h1 ELEKINESIS
+          a(href="http://elekinesis.com/va/") http://elekinesis.com/va/
+          br 
+          a(href="http://elekinesis.com/06/") http://elekinesis.com/06/
+          br
+          a(href="http://workshop.elekinesis.com/01/") http://elekinesis.com/workshop/
+        ul
+          li Year: 2013
+          li Design: Hirofumi Abe
+          li Coding: Naoto Yoshimoto
+        .images
+          img(src="/images/elekinesis_1.jpg" alt="")
+          img(src="/images/elekinesis_2.jpg" alt="")
+          img(src="/images/elekinesis_3.jpg" alt="")

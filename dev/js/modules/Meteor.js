@@ -35,7 +35,7 @@ export class Meteor {
 
 export class Meteors{
   constructor() {
-    this.colors = ['ffffff','EA6A63','61D0EA', 'EAA760','EEEEEE','777777'],
+    this.colors = ['ffffff', 'ffffff', 'eeeeee', 'eeeeee', 'eeeeee', 'EA6A63', '61D0EA', 'EAA760'],
     this.flyingParticles = []
     this.counter = 0
     this.Height = window.innerHeight
@@ -112,8 +112,8 @@ export class Meteors{
       ease : Power0.easeNone
     });
     TweenMax.to(p.mesh.position, duration, {
-      x: p.mesh.position.x * 1.5,
-      y: p.mesh.position.y * 1.5,
+      x: p.mesh.position.x ,
+      y: p.mesh.position.y ,
       z: 3000,
       ease: Strong.QuartIn
     });

@@ -44,12 +44,12 @@ export default class Planet {
         this.geometry = new THREE.OctahedronGeometry(200, 5)
         this.shininess = 30
         this.position = {x:-500, y:-500}
-        this.rotation = {duration: 5, x: -1, y: 1}
+        this.rotation = {duration: 9, x: -1, y: 1}
         this.noise = 30
         break;
       case 'Ice':
         this.colors = ['cdd8e7', 'f2ede6', 'edfbfc']
-        this.geometry = new THREE.OctahedronGeometry(400, 6)
+        this.geometry = new THREE.OctahedronGeometry(220, 6)
         this.shininess = 300
         this.position = {x:1000, y:1000}
         this.rotation = {duration: 8, x: 1, y: -1}

@@ -1,25 +1,24 @@
-- var head = { title: 'Works' }
+extends ../_layout.jade
+block vars
+  - var head = { title: 'Works' }
 
-include ../_header.jade
+block content 
+  #wrap
+    .inner.js-Pjax
+      section#works.list
+        h1 WORKS
+        h2 Website
+        ul
+          li#kotakobayashi: a(href='kotakobayashi/').pjax.project(data-tex = '/images/kotakobayashi.jpg') Kota Kobayashi
+          li#siaf2014: a(href='siaf2014/').pjax.project(data-tex = '/images/siaf2014.jpg') Sapporo International Art Festival 2014
+          li#qrion: a(href='qrion/').pjax.project(data-tex = '/images/qrion.jpg') Qrion
+          li#elekinesis: a(href='elekinesis/').pjax.project(data-tex = '/images/elekinesis.jpg') ELEKINESIS
+          li#nipponista: a(href='nipponista/').pjax.project(data-tex = '/images/nipponista.jpg') Nipponista Isetan
+          li#vwup: a(href='vwup/').pjax.project(data-tex = '/images/vwup.jpg') Volkswagen UP
+          li#srvvinci: a(href='srvvinci/').pjax.project(data-tex = '/images/srvvinci.jpg') Mad Me More Softly
 
-#wrap
-  .inner.js-Pjax
-    section#works.list
-      h1 WORKS
-      h2 Website
-      ul
-        li#kotakobayashi: a(href='kotakobayashi/').pjax.project(data-tex = '/images/kotakobayashi.jpg') Kota Kobayashi
-        li#siaf2014: a(href='siaf2014/').pjax.project(data-tex = '/images/siaf2014.jpg') Sapporo International Art Festival 2014
-        li#qrion: a(href='qrion/').pjax.project(data-tex = '/images/qrion.jpg') Qrion
-        li#elekinesis: a(href='elekinesis/').pjax.project(data-tex = '/images/elekinesis.jpg') ELEKINESIS
-        li#nipponista: a(href='nipponista/').pjax.project(data-tex = '/images/nipponista.jpg') Nipponista Isetan
-        li#vwup: a(href='vwup/').pjax.project(data-tex = '/images/vwup.jpg') Volkswagen UP
-        li#srvvinci: a(href='srvvinci/').pjax.project(data-tex = '/images/srvvinci.jpg') Mad Me More Softly
-
-      h2 VJ and Video
-      ul
-        li#vertivalhorizontal: a(href='verticalhorizontal/').pjax.project(data-tex = '/images/verticalhorizontal.jpg') Vertical Horizontal
-        li#isetanmens10th: a(href='isetanmens10th/').pjax.project(data-tex = '/images/isetanmens10th.jpg') Isetan Mens 10th Aniversarry 
-        li#ofkinect: a(href='ofkinect/').pjax.project(data-tex = '/images/ofkinect.jpg') oF + Kinect
-
-include ../_footer.jade
+        h2 VJ and Video
+        ul
+          li#vertivalhorizontal: a(href='verticalhorizontal/').pjax.project(data-tex = '/images/verticalhorizontal.jpg') Vertical Horizontal
+          li#isetanmens10th: a(href='isetanmens10th/').pjax.project(data-tex = '/images/isetanmens10th.jpg') Isetan Mens 10th Aniversarry 
+          li#ofkinect: a(href='ofkinect/').pjax.project(data-tex = '/images/ofkinect.jpg') oF + Kinect

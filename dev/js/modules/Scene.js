@@ -41,7 +41,7 @@ export default class Scene {
 
   _initScene() {
     this.scene = new THREE.Scene()
-    this.scene.fog = new THREE.FogExp2(0x111111, 0.0005) //3
+    this.scene.fog = new THREE.FogExp2(0x050505, 0.0003) //3
     // this.scene.fog = new THREE.FogExp2(0x111111, 0.0006)
   }
 
@@ -52,17 +52,17 @@ export default class Scene {
   _initRenderer() {
     if (Detector.webgl) {
       this.renderer = new THREE.WebGLRenderer({
-        antialias: true,
+        antialias: false,
         alpha: true
       })
-      this.renderer.setPixelRatio(window.devicePixelRatio)
+      // this.renderer.setPixelRatio(window.devicePixelRatio)
       this.renderer.setSize(this.Width, this.Height)
     } else if (Detector.canvas) {
       this.renderer = new THREE.CanvasRenderer({
-        antialias: true,
+        antialias: false,
         alpha: true
       })
-      this.renderer.setPixelRatio(window.devicePixelRatio)
+      // this.renderer.setPixelRatio(window.devicePixelRatio)
       this.renderer.setSize(window.innerWidth, window.innerHeight)
     } else {
       Detector.addGetWebGLMessage()

@@ -1,17 +1,16 @@
-- var head = { title: 'Works - openFrameworks + Kinet', url: 'ofkinect' }
+extends ../../_layout.jade
+block vars
+  - var head = { title: 'Works - openFrameworks + Kinet', url: 'ofkinect' }
 
-include ../../_header.jade
-
-#wrap
-  .inner.js-Pjax
-    section#works.single
-      header
-        h1 openFrameworks + Kinet
-      .content
-        ul
-          li Year: 2014
-          li openFrameworks(C++)
-        .embed-container
-          iframe(src='https://player.vimeo.com/video/78279062' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen)
-
-include ../../_footer.jade
+block content 
+  #wrap
+    .inner.js-Pjax
+      section#works.single
+        header
+          h1 openFrameworks + Kinet
+        .content
+          ul
+            li Year: 2014
+            li openFrameworks(C++)
+          .embed-container
+            iframe(src='https://player.vimeo.com/video/78279062' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen)

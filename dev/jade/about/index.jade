@@ -1,16 +1,15 @@
-- var head = { title: 'About' }
+extends ../_layout.jade
+block vars
+  - var head = { title: 'About' }
 
-include ../_header.jade
-
-#wrap
-  .inner.js-Pjax
-    section#about
-      h1 ABOUT
-      p
-        span Naoto Yoshimoto is a frontend web developer and designer moved to NYC from JAPAN. <br> I was a student at the <a href="http://sfpc.io/"><span class="bg">School For Poetic Computation</span></a>.<br>
-        span I started my career as a freelance, when I was a university student in 2010.
-        span Now I'm looking for a new job in NYC.
-        span This site is created with knowledge on the internet, greatest open source projects and me. All code available on <a href="https://github.com/naotone/naotone.com"><span class="bg">github.com</span></a>.
-        span I'm on <a href="https://facebook.com/naotone/"><span class="bg">Facebook</span></a>, <a href="https://instagram.com/naotone/"><span class="bg">Instagram</span></a> and you can <a href="mailto:me@naotone.com"><span class="bg">Email</span></a> me.<br>
-
-include ../_footer.jade
+block content 
+  #wrap
+    .inner.js-Pjax
+      section#about
+        h1 ABOUT
+        p
+          span Naoto Yoshimoto is a frontend web developer and designer moved to NYC from JAPAN. <br> I was a student at the <a href="http://sfpc.io/"><span class="bg">School For Poetic Computation</span></a>.<br>
+          span I started my career as a freelance, when I was a university student in 2010.
+          span Now I'm looking for a new job in NYC.
+          span This site is created with knowledge on the internet, greatest open source projects and me. All code available on <a href="https://github.com/naotone/naotone.com"><span class="bg">github.com</span></a>.
+          span I'm on <a href="https://facebook.com/naotone/"><span class="bg">Facebook</span></a>, <a href="https://instagram.com/naotone/"><span class="bg">Instagram</span></a> and you can <a href="mailto:me@naotone.com"><span class="bg">Email</span></a> me.<br>

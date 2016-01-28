@@ -1,22 +1,20 @@
-- var head = { title: 'Works - Qrion', url: 'qrion' }
+extends ../../_layout.jade
+block vars
+  - var head = { title: 'Works - Qrion', url: 'qrion' }
 
-include ../../_header.jade
+block content 
+  #wrap
+    .inner.js-Pjax
+      section#works.single
+        header
+          h1 Qrion
+          a(href="http://qrion.net") http://qrion.net         
+        .content
+          ul
+            li Yaer: 2014
+            li Design, Coding and Direction
+            li Wordpress, Three.js, SoundCloud API, Pjax
 
-#wrap
-  .inner.js-Pjax
-    section#works.single
-      header
-        h1 Qrion
-        a(href="http://qrion.net") http://qrion.net         
-      .content
-        ul
-          li Yaer: 2014
-          li Design, Coding and Direction
-          li Wordpress, Three.js, SoundCloud API, Pjax
-
-        .images
-          img(src="/images/qrion_1.jpg" alt="")
-          img(src="/images/qrion_2.jpg" alt="")
-
-
-include ../../_footer.jade
+          .images
+            img(src="/images/qrion_1.jpg" alt="")
+            img(src="/images/qrion_2.jpg" alt="")

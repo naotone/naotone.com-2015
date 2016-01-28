@@ -1,11 +1,11 @@
-- var head = { title: '', viewport: ''  }
+extends _layout.jade
+block vars
+  - var head = { title: '', viewport: ''  }
 
-include _header.jade
-#wrap.home
-  .inner.js-Pjax
-    header#header
-      h1 Naoto Yoshimoto
-      h2 Frontend Web Developer and Designer based in NYC.
-      p @naotone
-      
-include _footer.jade
+block content 
+  #wrap.home
+    .inner.js-Pjax
+      header#header
+        h1 Naoto Yoshimoto
+        h2 Frontend Web Developer and Designer based in NYC.
+        p @naotone

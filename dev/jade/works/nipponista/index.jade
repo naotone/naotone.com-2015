@@ -1,20 +1,19 @@
-- var head = { title: 'Works - Nipponista', url: 'nipponista' }
+extends ../../_layout.jade
+block vars
+  - var head = { title: 'Works - Nipponista', url: 'nipponista' }
 
-include ../../_header.jade
+block content 
 
-#wrap
-  .inner.js-Pjax
-    section#works.single
-      header
-        h1 Nipponista Isetan
-      .content
-        ul
-          li Year: 2013
-          li Design, Coding and Direction: Naoto Yoshimoto
-          li Production: augment 5
-        .images
-          img(src="/images/nipponista_1.jpg" alt="")
-          img(src="/images/nipponista_2.jpg" alt="")
-
-
-include ../../_footer.jade
+  #wrap
+    .inner.js-Pjax
+      section#works.single
+        header
+          h1 Nipponista Isetan
+        .content
+          ul
+            li Year: 2013
+            li Design, Coding and Direction: Naoto Yoshimoto
+            li Production: augment 5
+          .images
+            img(src="/images/nipponista_1.jpg" alt="")
+            img(src="/images/nipponista_2.jpg" alt="")

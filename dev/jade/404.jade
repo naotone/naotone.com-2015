@@ -1,10 +1,9 @@
-- var head = { title: '', viewport: ''  }
+extends _layout.jade
+block vars
+  - var head = { title: '', viewport: ''  }
 
-include _header.jade
-#wrap.home
-  .inner.js-Pjax
-    header#header
-      h1 Page Not Found
-              
-
-include _footer.jade
+block content 
+  #wrap.home
+    .inner.js-Pjax
+      header#header
+        h1 Page Not Found

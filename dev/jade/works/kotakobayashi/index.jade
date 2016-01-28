@@ -1,21 +1,19 @@
-- var head = { title: 'Works - Kota Kobayashi', url: 'kotakobayashi' }
+extends ../../_layout.jade
+block vars
+  - var head = { title: 'Works - Kota Kobayashi', url: 'kotakobayashi' }
 
-include ../../_header.jade
-
-#wrap
-  .inner.js-Pjax
-    section#works.single
-      header
-        h1 Kota Kobayashi
-        a(href="http://kotakobayashi.com/") http://kotakobayashi.com
-      .content
-        ul
-          li Year: 2014
-          li Design: Kota Kobayashi
-          li Coding: Naoto Yoshimoto
-          li Three.js
-        .images
-          img(src="/images/kotakobayashi_1.jpg" alt="")
-
-
-include ../../_footer.jade
+block content 
+  #wrap
+    .inner.js-Pjax
+      section#works.single
+        header
+          h1 Kota Kobayashi
+          a(href="http://kotakobayashi.com/") http://kotakobayashi.com
+        .content
+          ul
+            li Year: 2014
+            li Design: Kota Kobayashi
+            li Coding: Naoto Yoshimoto
+            li Three.js
+          .images
+            img(src="/images/kotakobayashi_1.jpg" alt="")

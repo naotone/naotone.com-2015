@@ -1,6 +1,9 @@
-doctype html
+doctype
 html(lang="en")
   head(prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#")
+    meta(name='description' content='Naoto Yoshimoto(@naotone) is a Front-end Web Developer and Designer based in NYC.')
+    meta(name='keywords' content='NAOTONE, Naoto Yoshimoto, Front end Web Developer, Web Designer, New York')
+    meta(name='author' content='Naoto Yoshimoto')
     if(!head.title)
       title Naoto Yoshimoto
       meta(property='og:title' content='Naoto Yoshimoto')
@@ -10,6 +13,8 @@ html(lang="en")
       title #{head.title} | Naoto Yoshimoto
       meta(property='og:title' content='#{head.title} | Naoto Yoshimoto')
       meta(property='og:image' content='http://naotone.com/images/#{head.url}.jpg')
+    if(head.title=='404')
+      meta(name='robots' content='noindex')
 
     meta(property='og:image' content='http://naotone.com/images/ogp.jpg')
     meta(property='og:site_name' content='Naoto Yoshimoto')
@@ -20,3 +25,4 @@ html(lang="en")
     meta(name='viewport', content='width=device-width, initial-scale=1.0, user-scalable=no')
     link(rel='stylesheet' type='text/css' href='//cloud.typography.com/7437872/649528/css/fonts.css')
     link(rel='stylesheet' href='/style.css')
+  
