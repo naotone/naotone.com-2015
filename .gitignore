@@ -5,3 +5,5 @@ test/
 images/
 esdoc/
 fonts/
+secret/
+sitemap.xml

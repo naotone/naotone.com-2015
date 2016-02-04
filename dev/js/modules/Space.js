@@ -146,13 +146,13 @@ export class Pjax {
   }
 
   _popstate(){
-
   }
 
   _onLoad(){
-    const regex = new RegExp('http[s]?:[/]+.*[/]*([^/]*)/works/[a-zA-Z0-9]+\/.*', 'g')
+    const regex = new RegExp('http[s]?:[/]+.*[/]*([^/]*)\/works\/[a-zA-Z0-9]+\/.*', 'g')
+    const regex2 = new RegExp('^http[s]?:[/]+.*[/]*([^/]*)\/works\/secret[/]$', 'g')
     let target = window.location.href
-    if (target.match(regex) ){
+    if (target.match(regex) && !target.match(regex2) ){
       let project = target.match(".+/(.+?)([\?#;].*)?$")[1].replace('/', '')
       let thumbnail = '/images/' + project + '.jpg'
       return thumbnail
@@ -256,12 +256,14 @@ export default class Space extends Scene{
     this.pjax._preLoadImages()
   }
 
-  _popsate(){
+  _popstate(){
     this.pjax._popstate()
     const thisScene = this.scene
     const regex = new RegExp('http[s]?:[/]+.*[/]*([^/]*)/works/[a-zA-Z0-9]+\/.*', 'g')
+    const regex2 = new RegExp('^http[s]?:[/]+.*[/]*([^/]*)\/works\/secret[/]$', 'g')
     let target = window.location.href
-    if (!target.match(regex)){
+    if (!target.match(regex) || target.match(regex2)){
+      console.log('1');
       for (var i = 0; i < this.cube.cubes.length; i++) {
         let cube = this.cube.cubes[i]
         TweenMax.to(cube.rotation, 1, {
@@ -288,11 +290,13 @@ export default class Space extends Scene{
       thumbnail = null
       bThumbnail = false
     }else if(target.match(regex)){
+      console.log('2');
       if(this.pjax._onLoad()){
         this.scene.add(this.cube._initCube(this.pjax._onLoad(), this.camera, true))
         this.cube.cubes.push(this.cube._getObjects())
       }
     }else{
+      console.log('3');
       bBox = true
       thumbnail = null
       bThumbnail = false

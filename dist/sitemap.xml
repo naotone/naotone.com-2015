@@ -2,54 +2,66 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>http://naotone.com/</loc>
-        <lastmod>2016-01-28T22:24:44.000Z</lastmod>
+        <lastmod>2016-02-04T05:12:49.000Z</lastmod>
     </url>
     <url>
         <loc>http://naotone.com/about/</loc>
-        <lastmod>2016-01-28T22:24:45.000Z</lastmod>
+        <lastmod>2016-02-04T05:12:49.000Z</lastmod>
     </url>
     <url>
         <loc>http://naotone.com/works/</loc>
-        <lastmod>2016-01-28T22:24:45.000Z</lastmod>
-    </url>
-    <url>
-        <loc>http://naotone.com/works/elekinesis/</loc>
-        <lastmod>2016-01-28T22:24:45.000Z</lastmod>
+        <lastmod>2016-02-04T05:12:49.000Z</lastmod>
     </url>
     <url>
         <loc>http://naotone.com/works/isetanmens10th/</loc>
-        <lastmod>2016-01-28T22:24:45.000Z</lastmod>
-    </url>
-    <url>
-        <loc>http://naotone.com/works/kotakobayashi/</loc>
-        <lastmod>2016-01-28T22:24:45.000Z</lastmod>
+        <lastmod>2016-02-04T05:12:50.000Z</lastmod>
     </url>
     <url>
         <loc>http://naotone.com/works/nipponista/</loc>
-        <lastmod>2016-01-28T22:24:45.000Z</lastmod>
+        <lastmod>2016-02-04T05:12:50.000Z</lastmod>
     </url>
     <url>
         <loc>http://naotone.com/works/ofkinect/</loc>
-        <lastmod>2016-01-28T22:24:45.000Z</lastmod>
+        <lastmod>2016-02-04T05:12:50.000Z</lastmod>
     </url>
     <url>
         <loc>http://naotone.com/works/qrion/</loc>
-        <lastmod>2016-01-28T22:24:45.000Z</lastmod>
+        <lastmod>2016-02-04T05:12:51.000Z</lastmod>
+    </url>
+    <url>
+        <loc>http://naotone.com/works/secret/</loc>
+        <lastmod>2016-02-04T05:12:51.000Z</lastmod>
     </url>
     <url>
         <loc>http://naotone.com/works/siaf2014/</loc>
-        <lastmod>2016-01-28T22:24:45.000Z</lastmod>
-    </url>
-    <url>
-        <loc>http://naotone.com/works/verticalhorizontal/</loc>
-        <lastmod>2016-01-28T22:24:45.000Z</lastmod>
+        <lastmod>2016-02-04T05:12:51.000Z</lastmod>
     </url>
     <url>
         <loc>http://naotone.com/works/srvvinci/</loc>
-        <lastmod>2016-01-28T22:24:45.000Z</lastmod>
+        <lastmod>2016-02-04T05:12:54.000Z</lastmod>
+    </url>
+    <url>
+        <loc>http://naotone.com/works/verticalhorizontal/</loc>
+        <lastmod>2016-02-04T05:12:56.000Z</lastmod>
     </url>
     <url>
         <loc>http://naotone.com/works/vwup/</loc>
-        <lastmod>2016-01-28T22:24:45.000Z</lastmod>
+        <lastmod>2016-02-04T05:12:56.000Z</lastmod>
+    </url>
+    <url>
+        <loc>http://naotone.com/works/kotakobayashi/</loc>
+        <lastmod>2016-02-04T05:12:50.000Z</lastmod>
+    </url>
+    <url>
+        <loc>http://naotone.com/works/elekinesis/</loc>
+        <lastmod>2016-02-04T05:12:49.000Z</lastmod>
+    </url>
+    <url>
+        <loc>http://naotone.com/works/secret/dd/</loc>
+        <lastmod>2016-02-04T05:12:56.000Z</lastmod>
+    </url>
+    <url>
+        <loc>http://naotone.com/works/secret/misoca/</loc>
+        <lastmod>2016-02-04T05:12:56.000Z</lastmod>
     </url>
 </urlset>

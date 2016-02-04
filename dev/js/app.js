@@ -23,7 +23,7 @@ export default class App {
     let transitionTrigger = document.querySelectorAll('nav a, h1 a')
 
     window.addEventListener('resize', (el) => { this._onResize(el) })
-    window.addEventListener('popstate', () => { this.three._popsate() })
+    window.addEventListener('popstate', () => { this.three._popstate() })
 
     for(var i=0; i<transitionTrigger.length; i++){
       transitionTrigger[i].addEventListener('click',  (el) => { this.three._start(el)}, false);
